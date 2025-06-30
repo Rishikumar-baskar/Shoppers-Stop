@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Wireless Bluetooth Headphones",
+    "price": 59.99,
+    "description": "High-quality wireless headphones with noise cancellation and long battery life.",
+    "ratings": "4.5",
+    "images": [
+      { "image": "https://example.com/images/headphones1.jpg" },
+      { "image": "https://example.com/images/headphones2.jpg" }
+    ],
+    "category": "Headphones",
+    "seller": "AudioWorld",
+    "stock": 120,
+    "numOfReviews": 2,
+    "reviews": [
+      {
+        "name": "Alice",
+        "rating": "5",
+        "comment": "Great sound quality and very comfortable to wear!"
+      },
+      {
+        "name": "Bob",
+        "rating": "4",
+        "comment": "Battery lasts long but the bass could be better."
+      }
+    ]
+  },
+  {
+    "name": "Stainless Steel Water Bottle",
+    "price": 19.99,
+    "description": "Eco-friendly, reusable water bottle made of stainless steel. Keeps drinks cold for 24 hours.",
+    "ratings": "4.8",
+    "images": [
+      { "image": "https://example.com/images/bottle1.jpg" }
+    ],
+    "category": "Outdoor",
+    "seller": "HydrationHub",
+    "stock": 75,
+    "numOfReviews": 1,
+    "reviews": [
+      {
+        "name": "Chris",
+        "rating": "5",
+        "comment": "Perfect for hikes and very durable!"
+      }
+    ]
+  },
+  {
+    "name": "Ergonomic Office Chair",
+    "price": 149.99,
+    "description": "Comfortable office chair with adjustable height and lumbar support.",
+    "ratings": "4.2",
+    "images": [
+      { "image": "https://example.com/images/chair1.jpg" }
+    ],
+    "category": "Home",
+    "seller": "FurniSpace",
+    "stock": 32,
+    "numOfReviews": 0,
+    "reviews": []
+  },
+  {
+    "name": "The Great Gatsby - Hardcover",
+    "price": 10.49,
+    "description": "Classic novel by F. Scott Fitzgerald. A must-read for literature lovers.",
+    "ratings": "4.9",
+    "images": [
+      { "image": "https://example.com/images/gatsby.jpg" }
+    ],
+    "category": "Books",
+    "seller": "BookBarn",
+    "stock": 200,
+    "numOfReviews": 3,
+    "reviews": [
+      {
+        "name": "Diana",
+        "rating": "5",
+        "comment": "Beautiful story and a high-quality edition."
+      },
+      {
+        "name": "Eric",
+        "rating": "5",
+        "comment": "Love this book! A timeless classic."
+      },
+      {
+        "name": "Fiona",
+        "rating": "4.5",
+        "comment": "Nice hardcover, arrived quickly."
+      }
+    ]
+  }
+]

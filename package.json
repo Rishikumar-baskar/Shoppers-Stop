@@ -1,0 +1,30 @@
+{
+  "name": "shoppers-stop",
+  "version": "1.0.0",
+  "description": "e-commerce mern stack application",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon backend/server.js",
+    "dev": "set NODE_ENV=development&& nodemon backend/server.js",
+    "prod": "set NODE_ENV=production&& nodemon backend/server.js",
+    "seeder": "node backend/utils/seeder.js"
+  },
+  "author": "B Rishikumar",
+  "license": "ISC",
+  "dependencies": {
+    
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.2",
+    "nodemailer": "^7.0.3",
+    "react-router-dom": "^7.6.3",
+    "validator": "^13.15.15"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
