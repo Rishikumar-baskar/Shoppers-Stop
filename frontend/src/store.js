@@ -1,5 +1,15 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { thunk } from "redux-thunk";
 
-configureStore({
-    reducer
+const reducer = combineReducers({
+
 })
+
+
+
+const store = configureStore({
+    reducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk)
+})
+
+export default store;
