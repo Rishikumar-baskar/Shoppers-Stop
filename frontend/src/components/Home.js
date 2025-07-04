@@ -1,8 +1,9 @@
 import { Fragment } from "react/jsx-runtime";
+import { useEffect } from "react";
 
 import MetaData from "./layouts/MetaData";
 
-export default function Home() {
+export default function Home() {useEffect(() => { document.title = "Buy Best Products"; }, []);
     return (
         <Fragment>
             <MetaData title={'Buy Best Products'} />
