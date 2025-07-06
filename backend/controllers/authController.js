@@ -5,6 +5,8 @@ const ErrorHandler = require('../utils/errorHandler');
 const sendToken = require('../utils/jwt');
 const crypto = require('crypto');
 
+
+// Register user - api/v1/register
 exports.registerUser = catchAsyncError(async (req, res, next) =>{
     const {name, email, password, avatar} = req.body
     const user = await User.create({
@@ -20,6 +22,7 @@ exports.registerUser = catchAsyncError(async (req, res, next) =>{
 
 })
 
+//Login user - api/v1/login
 exports.loginUser = catchAsyncError(async (req, res, next) => {
     const {email, password} = req.body;
 
@@ -33,9 +36,9 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
         return next(new ErrorHandler('Invalid email or password', 401))
     }
 
-    
+    const isMatch = await user.isValidPassword(password);
 
-    if(!user.isValidPassword(password)){
+    if(!isMatch){
 
         return next(new ErrorHandler('Invalid email or password', 401))
 
@@ -45,6 +48,8 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
     sendToken(user, 201, res)
 })
 
+
+//Logout user - api/v1/logout
 exports.logoutUser = (req, res, next) => {
     res.cookie('token',null,{
         expires: new Date(Date.now()),
@@ -56,6 +61,8 @@ exports.logoutUser = (req, res, next) => {
 
 }
 
+
+//Forgot password - api/v1/password/forgot
 exports.forgotPassword = catchAsyncError( async (req, res, next)=>{
     const user = await User.findOne({email: req.body.email}).select('+password');
 
@@ -92,6 +99,8 @@ exports.forgotPassword = catchAsyncError( async (req, res, next)=>{
        }
 });
 
+
+//Reset password - api/v1/password/reset/:token
 exports.resetPassword = catchAsyncError( async(req, res, next) =>{
     const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
 
@@ -118,4 +127,112 @@ exports.resetPassword = catchAsyncError( async(req, res, next) =>{
 
     sendToken(user, 201, res)
 
+})
+
+//Get User profile - api/v1/myprofile
+exports.getUserProfile = catchAsyncError( async (req, res, next) =>{
+   const user = await User.findById(req.user.id)
+   res.status(200).json({
+    success:true,
+    user
+   })
+
+})
+
+//Change Password - 
+exports.changePassword = catchAsyncError( async (req, res, next) =>{
+   const user = await User.findById(req.user.id).select('+password');
+   
+   //check old password
+   if (!(await user.isValidPassword(req.body.oldPassword))){
+        return next(new ErrorHandler('Old passwoed is incorrect', 401))
+
+   }
+
+   //assigning new password
+   user.password = req.body.password;
+   await user.save();
+   
+   res.status(200).json({
+    success:true,
+    user
+   })
+
+
+
+})
+
+
+//Update Profile
+exports.updateProfile = catchAsyncError( async (req, res, next) =>{
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email
+    }
+
+   const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+        new: true,
+        runValidators: true,
+    })
+
+    res.status(200).json({
+        success: true,
+        user
+    })
+
+})
+
+
+//Admin: Get all users
+exports.getAllUsers = catchAsyncError( async (req, res, next) =>{
+    const users = await User.find();
+    res.status(200).json({
+        success: true,
+        users
+    })
+})
+
+//Admin: Get Specific User
+exports.getUser = catchAsyncError( async (req, res, next) =>{
+    const user = await User.findById(req.params.id);
+    if(!user){
+        return next(new ErrorHandler(`User not found with this id ${req.params.id}`))
+    }
+
+    res.status(200).json({
+        success: true,
+        user
+    })
+})
+
+//Admin: Update User
+exports.updateUser = catchAsyncError( async (req, res, next) =>{
+     const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+        role: req.body.role
+    }
+
+   const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+        new: true,
+        runValidators: true,
+    })
+
+    res.status(200).json({
+        success: true,
+        user
+    })
+})
+
+//Admin: Delete User
+exports.deleteUser = catchAsyncError( async (req, res, next) =>{
+   const user = await User.findById(req.params.id);
+    if(!user){
+        return next(new ErrorHandler(`User not found with this id ${req.params.id}`))
+    }
+    await user.deleteOne();
+    res.status(200).json({
+        success: true,
+        
+    })
 })

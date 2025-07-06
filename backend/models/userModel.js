@@ -73,3 +73,4 @@ let model = mongoose.model('user', userSchema);
 
 
 module.exports = model;
+module.exports = mongoose.model('User', userSchema); // ✅ Must be 'User'
