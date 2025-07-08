@@ -54,7 +54,7 @@ class APIFeatures{
             }
         });
         
-        console.log('Transformed query object:', transformedQuery);
+        //console.log('Transformed query object:', transformedQuery);
         
         this.query = this.query.find(transformedQuery);
         
