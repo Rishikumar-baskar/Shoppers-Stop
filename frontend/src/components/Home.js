@@ -1,11 +1,14 @@
-import { Fragment } from "react/jsx-runtime";
-import { useEffect } from "react";
+//import { Fragment } from "react/jsx-runtime";
+//import { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
+
 import { useDispatch, useSelector} from "react-redux";
 import MetaData from "./layouts/MetaData";
 import { getProducts } from "../actions/productsActions";
 import Loader from "./layouts/Loader";
 import Product from "./product/Product";
 import { toast } from "react-toastify";
+import Pagination from 'react-js-pagination';
 
 export default function Home() {
 
@@ -32,13 +35,17 @@ useEffect (()=>{
             <section id="products" className="container mt-5">
                 <div className="row">
                     {products && products.map(product => (
-                     <Product product={product}/>
+                     <Product key={product._id} product={product}/>
                     ))}
                     
 
                    
                 </div>
             </section>
+            <div className="d-flex justify-content-center mt-5">
+                <Pagination/>
+
+            </div>
 
         </Fragment>
         }
