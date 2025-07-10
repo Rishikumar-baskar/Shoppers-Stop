@@ -1,36 +1,38 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  loading: false,
+  products: [],
+  productsCount: 0,
+  error: null,
+  resPerPage: 2,
+};
 
 const productsSlice = createSlice({
-    name: 'products',
-    initialState: {
-        loading: false
+  name: 'productsState',
+  initialState,
+  reducers: {
+    productsRequest(state) {
+      state.loading = true;
+      state.error = null;
     },
-    reducers: {
-        productsRequest(state, action){
-            return{
-                loading: true,
-            }
-
-        },
-        productsSuccess(state, action){
-            return{
-                loading: false,
-                products: action.payload.products
-            }
-        },
-        productsFail(state, action){
-            return{
-            loading: false,
-            error: action.payload
-            }
-            
-        }
-    }
+    productsSuccess(state, action) {
+      state.loading = false;
+      state.products = action.payload.products;
+      state.productsCount = action.payload.productsCount;
+      state.resPerPage = action.payload.resPerPage;
+    },
+    productsFail(state, action) {
+      state.loading = false;
+      state.error = action.payload;
+    },
+  },
 });
 
-const{ actions, reducer } = productsSlice;
+export const {
+  productsRequest,
+  productsSuccess,
+  productsFail,
+} = productsSlice.actions;
 
-export const { productsRequest, productsSuccess, productsFail} = actions;
-
-export default reducer;
+export default productsSlice.reducer;
