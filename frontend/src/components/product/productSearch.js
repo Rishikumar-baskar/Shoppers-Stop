@@ -20,6 +20,7 @@ export default function ProductSearch() {
     const dispatch = useDispatch();
     const { products, loading, error, productsCount, resPerPage } = useSelector((state) => state.productsState)
     const [currentPage, setCurrentPage] = useState(1);
+    const [price, setPrice] = useState([1,1000]);
     const { keyword } = useParams();
     const setCurrentPageNo = (pageNo) => {
         setCurrentPage(pageNo)
@@ -32,9 +33,9 @@ export default function ProductSearch() {
             );
         }
 
-        dispatch(getProducts(keyword, currentPage));
+        dispatch(getProducts(keyword, price, currentPage));
 
-    }, [error, dispatch, currentPage, keyword]);
+    }, [error, dispatch, currentPage, keyword, price]);
     return (
         <Fragment>
             {loading ? <Loader /> :
@@ -54,7 +55,10 @@ export default function ProductSearch() {
                                         }}
                                         min={1}
                                         max={1000}
-                                        defaultValue={[1, 1000]}
+                                        defaultValue={price}
+                                        onChange={(price) =>{
+                                                         setPrice(price)
+                                        }}
                                         handleRender={
                                             renderProps => {
                                                 return (
