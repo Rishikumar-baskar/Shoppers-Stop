@@ -26,7 +26,7 @@ export default function Home() {
             );
         }
 
-        dispatch(getProducts(null, currentPage));
+        dispatch(getProducts(null, null,null,null, currentPage));
 
     }, [error, dispatch,currentPage]);
     return (
