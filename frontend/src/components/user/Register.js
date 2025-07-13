@@ -68,7 +68,7 @@ export default function Register(){
     return(
         <div className='row wrapper'>
   <div className='col-10 col-lg-5'>
-    <form onSubmit={submitHandler} className='shadow-lg' enctype='multipart/form-data'>
+    <form onSubmit={submitHandler} className='shadow-lg' encType='multipart/form-data'>
       <h1 className='mb-3'>Register</h1>
 
       <div className='form-group'>

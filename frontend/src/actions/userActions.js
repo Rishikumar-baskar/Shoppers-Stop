@@ -31,7 +31,7 @@ export const register = (userData) => async (dispatch) =>{
                 'Content-type': 'mutipart/form-data'
             }
         }
-        const {data} = await axios.post(`${baseURL}/api/v1/register`, {userData,config});
+        const {data} = await axios.post(`${baseURL}/api/v1/register`, userData,config);
         dispatch(registerSuccess(data))
 
     }catch(error){
