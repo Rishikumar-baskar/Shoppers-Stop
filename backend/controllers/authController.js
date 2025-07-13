@@ -12,7 +12,7 @@ exports.registerUser = catchAsyncError(async (req, res, next) =>{
 
     let avatar;
     if(req.file){
-        avatar = `${req.protocol}://${req.host}/uploads/user/r${req.file.originalname}`
+        avatar = `${req.protocol}://${req.host}/uploads/user/${req.file.originalname}`
     }
 
     const user = await User.create({
