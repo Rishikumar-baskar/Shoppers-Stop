@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const errorMiddleware = require('./middlewares/error')
 const auth = require('./routes/auth');
 const cookieParser = require('cookie-parser');
@@ -7,6 +8,7 @@ const cors = require('cors')
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors())
+app.use('/uploads', express.static(path.join(__dirname,'uploads')))
 
 const products = require('./routes/product')
 const order = require('./routes/order')
