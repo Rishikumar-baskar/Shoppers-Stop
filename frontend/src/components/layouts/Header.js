@@ -1,6 +1,8 @@
 import Search from "./Search";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function Header() {
+  const navigate = useNavigate()
   return (
 
     <nav className="navbar row">
@@ -19,7 +21,10 @@ export default function Header() {
 
 
       <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-        <Link to='/login' className="btn" id="login_btn">Login</Link>
+        {/* <Link to="/login" className="btn" id="login_btn">Login</Link> */}
+        <div className="btn" id="login_btn"onClick={()=>{
+          console.info('calling login')
+          navigate('/login')}}>Login</div>
 
         <span id="cart" className="ml-3">Cart</span>
         <span className="ml-1" id="cart_count">2</span>

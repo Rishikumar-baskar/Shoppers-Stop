@@ -11,29 +11,32 @@ import ProductDetail from './components/product/productDetail';
 import ProductSearch from './components/product/productSearch';
 import Login from './components/user/Login';
 import Register from './components/user/Register';
+import MainLayout from './components/layouts';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
+    <div className="App">
+      {/* <MainLayout /> */}
+      <Router>
         <HelmetProvider>
-          <Header />
-          <ToastContainer theme="dark"/>
-          <Routes>
-            <Route path='/' element={<Home />} />
-           <Route path='/search/:keyword' element={<ProductSearch />} />
 
-            <Route path='/product/:id' element={<ProductDetail />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
+          <ToastContainer theme="dark" />
+          <Routes>
+              <Route path='/' element={<Home />} />
+            <Route path='/' element={<MainLayout />}>
+              <Route path='/search/:keyword' element={<ProductSearch />} />
+              <Route path='/product/:id' element={<ProductDetail />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+            </Route>
 
 
 
           </Routes>
-          <Footer />
+
         </HelmetProvider>
-      </div>
-    </Router>
+      </Router>
+    </div>
 
 
   );

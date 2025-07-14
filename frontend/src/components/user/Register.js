@@ -44,6 +44,8 @@ export default function Register(){
         formData.append('password', userData.password)
         formData.append('avatar', avatar)
         dispatch(register(formData))
+        console.info('navigateing home')
+        // navigate('/')
 
 
     }
@@ -63,7 +65,7 @@ export default function Register(){
                    return
                     }
 
-    },[error])
+    },[error,isAuthenticated])
 
     return(
         <div className='row wrapper'>

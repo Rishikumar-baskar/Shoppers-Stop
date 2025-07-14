@@ -25,13 +25,14 @@ export const register = (userData) => async (dispatch) =>{
         const baseURL = process.env.REACT_APP_BASE_URL
 
     try{
-        dispatch(registerRequest())
+        // dispatch(registerRequest())
         const config = {
             headers:{
                 'Content-type': 'mutipart/form-data'
             }
         }
         const {data} = await axios.post(`${baseURL}/api/v1/register`, userData,config);
+        console.info('register:',data)
         dispatch(registerSuccess(data))
 
     }catch(error){

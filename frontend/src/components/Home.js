@@ -9,6 +9,7 @@ import Loader from "./layouts/Loader";
 import Product from "./product/Product";
 import { toast } from "react-toastify";
 import Pagination from 'react-js-pagination';
+import Header from "./layouts/Header";
 
 export default function Home() {
 
@@ -28,9 +29,11 @@ export default function Home() {
 
         dispatch(getProducts(null, null,null,null, currentPage));
 
-    }, [error, dispatch,currentPage]);
+    }, [error, dispatch]);
+
     return (
         <Fragment>
+            <Header/>
             {loading ? <Loader /> :
                 <Fragment>
                     <MetaData title={'Buy Best Products'} />
