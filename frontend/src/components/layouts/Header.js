@@ -1,6 +1,7 @@
 import Search from "./Search";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+// import test from '../../../public/images/logo.svg'
 export default function Header() {
   const navigate = useNavigate()
   return (
@@ -9,7 +10,7 @@ export default function Header() {
       <div className="col-12 col-md-3">
         <div className="navbar-brand">
           <Link to="/">
-            <img width="100px" height={100} src="./images/logo.svg" />
+            <img width="100px" height={100} src="/images/logo.svg" />
           </Link>
         </div>
       </div>
