@@ -29,7 +29,7 @@ export default function Home() {
 
         dispatch(getProducts(null, null,null,null, currentPage));
 
-    }, [error, dispatch]);
+    }, [error, dispatch,currentPage]);
 
     return (
         <Fragment>
