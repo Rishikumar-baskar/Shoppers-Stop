@@ -1,9 +1,20 @@
 import Search from "./Search";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../../actions/userActions";
 // import test from '../../../public/images/logo.svg'
+
 export default function Header() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isAuthenticated, user } = useSelector(state => state.authState);
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate('/');
+  };
+
   return (
 
     <nav className="navbar row">
@@ -19,13 +30,25 @@ export default function Header() {
         <Search />
       </div>
 
-
-
       <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-        {/* <Link to="/login" className="btn" id="login_btn">Login</Link> */}
-        <div className="btn" id="login_btn"onClick={()=>{
-          console.info('calling login')
-          navigate('/login')}}>Login</div>
+        {isAuthenticated ? (
+          <>
+            <div className="btn" id="login_btn" onClick={handleLogout}>
+              Logout
+            </div>
+            <div className="welcome-message">
+              <span className="welcome-text">Welcome, </span>
+              <span className="user-name">{user?.name}</span>
+            </div>
+          </>
+        ) : (
+          <div className="btn" id="login_btn" onClick={() => {
+            console.info('calling login')
+            navigate('/login')
+          }}>
+            Login
+          </div>
+        )}
 
         <span id="cart" className="ml-3">Cart</span>
         <span className="ml-1" id="cart_count">2</span>

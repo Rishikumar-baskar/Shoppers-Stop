@@ -14,30 +14,34 @@ export default function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {loading, error, isAuthenticated } = useSelector(state => state.authState);
+    
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(login(email, password))
-
     }
 
     useEffect(() => {
+        // Redirect if already authenticated
         if(isAuthenticated){
-            navigate('/')
-
+            navigate('/');
+            return;
         }
+        
         if(error) {
             console.log("Login error:", error);
-
             toast(error,{
                 position: "bottom-center",
                 type: 'error',
-                onOpen: ()=>{ dispatch(clearAuthError) }
+                onOpen: ()=>{ dispatch(clearAuthError()) }
             });
-            return
-
         }
-
-    },[error, isAuthenticated, dispatch])
+    },[error, isAuthenticated, navigate, dispatch])
+    
+    // Don't render the form if user is already authenticated
+    if(isAuthenticated) {
+        return null;
+    }
+    
     return (
         <Fragment>
             <MetaData title={'Login'}/>

@@ -21,7 +21,7 @@ export default function Register(){
 
     const onChange = (e) => {
         if(e.target.name === 'avatar') {
-            const reader = new FileReader;
+            const reader = new FileReader();
             reader.onload = () => {
                 if(reader.readyState === 2){
                     setAvatarPreview(reader.result);
@@ -51,21 +51,28 @@ export default function Register(){
     }
 
     useEffect(()=>{
+        // Redirect if already authenticated
         if(isAuthenticated){
             navigate('/');
+            return;
         }
+        
         if(error){
        console.log("Login error:", error);
        
                    toast(error,{
                        position: "bottom-center",
                        type: 'error',
-                       onOpen: ()=>{ dispatch(clearAuthError) }
+                       onOpen: ()=>{ dispatch(clearAuthError()) }
                    });
-                   return
-                    }
+        }
 
-    },[error,isAuthenticated])
+    },[error,isAuthenticated,navigate,dispatch])
+
+    // Don't render the form if user is already authenticated
+    if(isAuthenticated) {
+        return null;
+    }
 
     return(
         <div className='row wrapper'>

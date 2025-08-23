@@ -12,8 +12,17 @@ import ProductSearch from './components/product/productSearch';
 import Login from './components/user/Login';
 import Register from './components/user/Register';
 import MainLayout from './components/layouts';
+import { useEffect } from 'react';
+import store from './store';
+import { loadUser } from './actions/userActions';
+
 
 function App() {
+
+  useEffect(() =>{
+    store.dispatch(loadUser());
+  }, []);
+
   return (
     <div className="App">
       {/* <MainLayout /> */}
