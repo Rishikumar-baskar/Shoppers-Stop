@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../../actions/userActions';
+import { DropdownButton, Dropdown, Image } from 'react-bootstrap'
+import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 
 // Search Component
 function Search() {
@@ -14,14 +16,14 @@ function Search() {
         navigate(`/search/${keyword}`)
     }
 
-    const clearKeyword = () =>{
+    const clearKeyword = () => {
         setKeyword("");
     }
 
     useEffect(() => {
-        if(location.pathname === '/')
+        if (location.pathname === '/')
             clearKeyword();
-    },[location.pathname])
+    }, [location.pathname])
 
     return (
         <form onSubmit={searchHandler}>
@@ -71,13 +73,24 @@ export default function Header() {
             <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
                 {isAuthenticated ? (
                     <>
-                        <div className="btn" id="login_btn" onClick={handleLogout}>
-                            Logout
-                        </div>
-                        <div className="welcome-message">
-                            <span className="welcome-text">Welcome, </span>
-                            <span className="user-name">{user?.name}</span>
-                        </div>
+
+                        <Dropdown className='d-inline'>
+                            <DropdownToggle variant='default text-white pr-5' id='dropdown-basic'>
+                                <figure className='avatar avatar-nav'>
+                                    <Image width="50px" src={user.avatar ?? './images/default_avatar.png'} />
+                                </figure>
+                                <span>Hi, </span>
+
+                                <span>{user?.name}</span>
+                            </DropdownToggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item className='text-dark' onClick={() => { navigate('/myprofile') }}>Profile</Dropdown.Item>
+
+                                <Dropdown.Item className='text-danger' onClick={handleLogout}>Logout</Dropdown.Item>
+
+                            </Dropdown.Menu>
+                        </Dropdown>
+
                     </>
                 ) : (
                     <div className="btn" id="login_btn" onClick={() => {
