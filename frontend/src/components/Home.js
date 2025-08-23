@@ -1,7 +1,4 @@
-//import { Fragment } from "react/jsx-runtime";
-//import { useEffect } from "react";
 import React, { Fragment, useEffect, useState } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 import MetaData from "./layouts/MetaData";
 import { getProducts } from "../actions/productsActions";
@@ -9,31 +6,29 @@ import Loader from "./layouts/Loader";
 import Product from "./product/Product";
 import { toast } from "react-toastify";
 import Pagination from 'react-js-pagination';
-import Header from "./layouts/Header";
 
 export default function Home() {
 
     const dispatch = useDispatch();
     const { products, loading, error, productsCount, resPerPage } = useSelector((state) => state.productsState)
     const [currentPage, setCurrentPage] = useState(1);
+    
     const setCurrentPageNo = (pageNo) => {
         setCurrentPage(pageNo)
     }
 
     useEffect(() => {
         if (error) {
-            return toast.error(error,
-                { position: "top-center" }
-            );
+            toast.error(error, { position: "top-center" });
+            return;
         }
 
-        dispatch(getProducts(null, null,null,null, currentPage));
+        dispatch(getProducts(null, null, null, null, currentPage));
 
-    }, [error, dispatch,currentPage]);
+    }, [error, dispatch, currentPage]);
 
     return (
         <Fragment>
-            <Header/>
             {loading ? <Loader /> :
                 <Fragment>
                     <MetaData title={'Buy Best Products'} />
@@ -44,35 +39,26 @@ export default function Home() {
                             {products && products.map(product => (
                                 <Product col={3} key={product._id} product={product} />
                             ))}
-
-
-
                         </div>
                     </section>
                     
-                    {productsCount > resPerPage && productsCount>0?
-                    <div className="d-flex justify-content-center mt-5">
-                        <Pagination
-                        
-                            activePage={currentPage}
-                            itemsCountPerPage={resPerPage}        // ← important
-                            totalItemsCount={productsCount}       // ← important
-                            onChange={setCurrentPageNo}
-                            itemClass={'page-item'}
-                            linkClass={'page-link'}
-                            nextPageText={'Next'}
-                            
-                            firstPageText={'First'}
-                            lastPageText={'Last'}
-
-
-                        />
-
-                    </div>:null }
-
+                    {productsCount > resPerPage && productsCount > 0 ?
+                        <div className="d-flex justify-content-center mt-5">
+                            <Pagination
+                                activePage={currentPage}
+                                itemsCountPerPage={resPerPage}
+                                totalItemsCount={productsCount}
+                                onChange={setCurrentPageNo}
+                                itemClass={'page-item'}
+                                linkClass={'page-link'}
+                                nextPageText={'Next'}
+                                firstPageText={'First'}
+                                lastPageText={'Last'}
+                            />
+                        </div> : null
+                    }
                 </Fragment>
             }
         </Fragment>
-
     )
 }
