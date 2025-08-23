@@ -1,4 +1,4 @@
-import { clearError, loginFail, loginRequest, loginSuccess, registerRequest,registerSuccess,registerFail, loadUserRequest,loadUserSuccess,loadUserFail, logout } from "../slices/authSlice";
+import { clearError, loginFail, loginRequest, loginSuccess, registerRequest,registerSuccess,registerFail, loadUserRequest,loadUserSuccess,loadUserFail, logout, updateProfileRequest, updateProfileSuccess, updateProfileFail } from "../slices/authSlice";
 import axios from 'axios';
 import { setToken, getToken, removeToken } from '../utils/tokenUtils';
 
@@ -99,5 +99,36 @@ export const logoutUser = () => async (dispatch) => {
         // Always clear local storage and state
         removeToken();
         dispatch(logout());
+    }
+};
+export const updateProfile = (userData) => async (dispatch) =>{
+        const baseURL = process.env.REACT_APP_BASE_URL
+
+    try{
+        dispatch(updateProfileRequest())
+        
+        // Get token from localStorage
+        const token = getToken();
+        
+        if (!token) {
+            dispatch(updateProfileFail('No token found'));
+            return;
+        }
+        
+        const config = {
+            headers:{
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            }
+        }
+        const {data} = await axios.put(`${baseURL}/api/v1/update`, userData, config);
+        
+        console.log('Profile update successful:', data);
+        dispatch(updateProfileSuccess(data))
+
+    }catch(error){
+        console.error('Profile update error:', error);
+        const errorMessage = error.response?.data?.message || error.message || 'Profile update failed';
+        dispatch(updateProfileFail(errorMessage))
     }
 };

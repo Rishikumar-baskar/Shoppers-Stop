@@ -7,10 +7,12 @@ const authSlice = createSlice({
         loading: false,
         isAuthenticated: false,
         user: null,
-        error: null
+        error: null,
+        isUpdated: false
     },
     reducers: {
         loginRequest(state, action){
+            console.log('loginRequest called, setting loading to true');
             return{
                 ...state,
                 loading: true,
@@ -19,6 +21,7 @@ const authSlice = createSlice({
 
         },
         loginSuccess(state, action){
+            console.log('loginSuccess called, setting user and isAuthenticated');
             return{
                 loading: false,
                 isAuthenticated: true,
@@ -26,6 +29,7 @@ const authSlice = createSlice({
             }
         },
         loginFail(state, action){
+            console.log('loginFail called, setting loading to false and error:', action.payload);
             return{
                 ...state,
             loading: false,
@@ -34,12 +38,14 @@ const authSlice = createSlice({
             
         },
         clearError(state,action){
+            console.log('clearError called, clearing error');
             return{
                 ...state,
                 error: null
             }
         },
          registerRequest(state, action){
+            console.log('registerRequest called, setting loading to true');
             return{
                 ...state,
                 loading: true,
@@ -48,6 +54,7 @@ const authSlice = createSlice({
 
         },
         registerSuccess(state, action){
+            console.log('registerSuccess called, setting user and isAuthenticated');
             return{
                 loading: false,
                 isAuthenticated: true,
@@ -55,6 +62,7 @@ const authSlice = createSlice({
             }
         },
         registerFail(state, action){
+            console.log('registerFail called, setting loading to false and error:', action.payload);
             return{
                 ...state,
             loading: false,
@@ -63,15 +71,16 @@ const authSlice = createSlice({
             
         },
         loadUserRequest(state, action){
+            console.log('loadUserRequest called, setting loading to true and isAuthenticated to false');
             return{
                 ...state,
                 isAuthenticated: false,
                 loading: true,
                 
             }
-
         },
         loadUserSuccess(state, action){
+            console.log('loadUserSuccess called, setting user and isAuthenticated');
             return{
                 loading: false,
                 isAuthenticated: true,
@@ -79,6 +88,7 @@ const authSlice = createSlice({
             }
         },
         loadUserFail(state, action){
+            console.log('loadUserFail called, setting loading to false and error:', action.payload);
             return{
                 ...state,
             loading: false,
@@ -87,11 +97,48 @@ const authSlice = createSlice({
             
         },
         logout(state, action) {
+            console.log('logout called, resetting all state');
             return {
                 loading: false,
                 isAuthenticated: false,
                 user: null,
-                error: null
+                error: null,
+                isUpdated: false
+            }
+        },
+         updateProfileRequest(state, action){
+            console.log('updateProfileRequest called, setting loading to true and isUpdated to false');
+            return{
+                ...state,
+                loading: true,
+                isUpdated: false,
+                
+            }
+
+        },
+        updateProfileSuccess(state, action){
+            console.log('updateProfileSuccess called, setting isUpdated to true');
+            return{
+                ...state,
+                loading: false,
+                user: action.payload.user,
+                isUpdated: true,
+            }
+        },
+        updateProfileFail(state, action){
+            console.log('updateProfileFail called, setting loading to false and error:', action.payload);
+            return{
+                ...state,
+            loading: false,
+            error: action.payload
+            }
+            
+        },
+        UPDATE_PROFILE_RESET(state, action) {
+            console.log('UPDATE_PROFILE_RESET called, resetting isUpdated to false');
+            return {
+                ...state,
+                isUpdated: false
             }
         }
     }
@@ -99,6 +146,6 @@ const authSlice = createSlice({
 
 const{ actions, reducer } = authSlice;
 
-export const {loginRequest, loginSuccess, loginFail,clearError,registerRequest,registerSuccess,registerFail,loadUserRequest,loadUserSuccess,loadUserFail, logout} = actions;
+export const {loginRequest, loginSuccess, loginFail,clearError,registerRequest,registerSuccess,registerFail,loadUserRequest,loadUserSuccess,loadUserFail, logout,updateProfileRequest,updateProfileSuccess,updateProfileFail, UPDATE_PROFILE_RESET} = actions;
 
 export default reducer;
