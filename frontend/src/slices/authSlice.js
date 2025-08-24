@@ -23,9 +23,11 @@ const authSlice = createSlice({
         loginSuccess(state, action){
             console.log('loginSuccess called, setting user and isAuthenticated');
             return{
+                ...state,
                 loading: false,
                 isAuthenticated: true,
-                user: action.payload.user
+                user: action.payload.user,
+                error: null
             }
         },
         loginFail(state, action){
@@ -56,9 +58,11 @@ const authSlice = createSlice({
         registerSuccess(state, action){
             console.log('registerSuccess called, setting user and isAuthenticated');
             return{
+                ...state,
                 loading: false,
                 isAuthenticated: true,
-                user: action.payload.user
+                user: action.payload.user,
+                error: null
             }
         },
         registerFail(state, action){
@@ -71,10 +75,9 @@ const authSlice = createSlice({
             
         },
         loadUserRequest(state, action){
-            console.log('loadUserRequest called, setting loading to true and isAuthenticated to false');
+            console.log('loadUserRequest called, setting loading to true');
             return{
                 ...state,
-                isAuthenticated: false,
                 loading: true,
                 
             }
@@ -82,9 +85,11 @@ const authSlice = createSlice({
         loadUserSuccess(state, action){
             console.log('loadUserSuccess called, setting user and isAuthenticated');
             return{
+                ...state,
                 loading: false,
                 isAuthenticated: true,
-                user: action.payload.user
+                user: action.payload.user,
+                error: null
             }
         },
         loadUserFail(state, action){

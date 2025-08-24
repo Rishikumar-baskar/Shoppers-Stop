@@ -2,7 +2,7 @@ import axios from 'axios';
 import { productFail, productRequest, productSuccess } from '../slices/productSlice';
 
 export const getProduct = id=> async (dispatch) => {
-    const baseURL = process.env.REACT_APP_BASE_URL
+    const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:8000'
 
     try{
         dispatch(productRequest());

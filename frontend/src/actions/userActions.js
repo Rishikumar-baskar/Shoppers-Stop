@@ -3,13 +3,16 @@ import axios from 'axios';
 import { setToken, getToken, removeToken } from '../utils/tokenUtils';
 
 export const login = (email, password) => async (dispatch) =>{
-        const baseURL = process.env.REACT_APP_BASE_URL
+        const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:8000'
         console.log('Login attempt - Base URL:', baseURL);
         console.log('Login attempt - Email:', email);
+        console.log('Environment variables:', process.env);
 
     try{
         dispatch(loginRequest())
-        const {data} = await axios.post(`${baseURL}/api/v1/login`, {email,password},{ withCredentials: true }   );
+        const url = `${baseURL}/api/v1/login`;
+        console.log('Making request to:', url);
+        const {data} = await axios.post(url, {email,password},{ withCredentials: true }   );
         
         console.log('Login successful - Data:', data);
         
@@ -20,6 +23,8 @@ export const login = (email, password) => async (dispatch) =>{
 
     }catch(error){
         console.error('Login error details:', error);
+        console.error('Error response:', error.response);
+        console.error('Error request:', error.request);
         const errorMessage = error.response?.data?.message || error.message || 'Login failed';
         dispatch(loginFail(errorMessage))
     }
@@ -32,7 +37,7 @@ export const clearAuthError = () => (dispatch) => {
 };
 
 export const register = (userData) => async (dispatch) =>{
-        const baseURL = process.env.REACT_APP_BASE_URL
+        const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:8000'
 
     try{
         dispatch(registerRequest())
@@ -56,7 +61,7 @@ export const register = (userData) => async (dispatch) =>{
 }
 
 export const loadUser = () => async (dispatch) =>{
-        const baseURL = process.env.REACT_APP_BASE_URL
+        const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:8000'
 
     try{
         dispatch(loadUserRequest());
@@ -80,6 +85,7 @@ export const loadUser = () => async (dispatch) =>{
         dispatch(loadUserSuccess(data));
 
     }catch(error){
+        console.error('LoadUser error:', error);
         // If token is invalid, remove it from localStorage
         removeToken();
         const errorMessage = error.response?.data?.message || error.message || 'Authentication failed';
@@ -88,7 +94,7 @@ export const loadUser = () => async (dispatch) =>{
 }
 
 export const logoutUser = () => async (dispatch) => {
-    const baseURL = process.env.REACT_APP_BASE_URL;
+    const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:8000';
     
     try {
         // Call backend logout endpoint
@@ -102,7 +108,7 @@ export const logoutUser = () => async (dispatch) => {
     }
 };
 export const updateProfile = (userData) => async (dispatch) =>{
-        const baseURL = process.env.REACT_APP_BASE_URL
+        const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:8000'
 
     try{
         dispatch(updateProfileRequest())

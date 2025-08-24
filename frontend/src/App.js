@@ -20,7 +20,17 @@ import UpdateProfile from './components/user/UpdateProfile';
 
 function App() {
     useEffect(() => {
-        store.dispatch(loadUser());
+        // Debug: Log environment variable
+        //console.log('REACT_APP_BASE_URL:', process.env.REACT_APP_BASE_URL);
+        //console.log('All environment variables:', process.env);
+        //console.log('NODE_ENV:', process.env.NODE_ENV);
+        
+        // Only load user if there's a token in localStorage
+        const token = localStorage.getItem('token');
+       // console.log('Token in localStorage:', token);
+        if (token) {
+            store.dispatch(loadUser());
+        }
     }, []);
 
     return (

@@ -6,7 +6,7 @@ import {
 } from '../slices/productsSlice';
 
 export const getProducts = (keyword, price,category,rating, currentPage) => async (dispatch) => {
-  const baseURL = process.env.REACT_APP_BASE_URL;
+  const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:8000';
 
   try {
     dispatch(productsRequest());
