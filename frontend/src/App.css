@@ -619,3 +619,20 @@ ul.CTAs a {
   font-size: 0.8rem;
   color: grey;
 }
+
+/* Toast Container Styles */
+.Toastify__toast-container {
+  z-index: 9999 !important;
+}
+
+.Toastify__toast {
+  z-index: 9999 !important;
+  position: relative !important;
+}
+
+/* Ensure toast is visible */
+.Toastify__toast-container--top-center {
+  top: 1em !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}

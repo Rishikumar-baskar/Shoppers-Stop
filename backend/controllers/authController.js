@@ -147,18 +147,25 @@ exports.getUserProfile = catchAsyncError( async (req, res, next) =>{
 
 //Change Password - 
 exports.changePassword = catchAsyncError( async (req, res, next) =>{
+   console.log('changePassword - Request body:', req.body);
    const user = await User.findById(req.user.id).select('+password');
+   console.log('changePassword - User found:', user ? user.name : 'null');
    
    //check old password
-   if (!(await user.isValidPassword(req.body.oldPassword))){
-        return next(new ErrorHandler('Old passwoed is incorrect', 401))
-
+   const isOldPasswordValid = await user.isValidPassword(req.body.oldPassword);
+   console.log('changePassword - Old password valid:', isOldPasswordValid);
+   
+   if (!isOldPasswordValid){
+        console.log('changePassword - Old password incorrect, returning error');
+        return next(new ErrorHandler('Old password is incorrect', 401))
    }
 
+   console.log('changePassword - Old password correct, updating password');
    //assigning new password
    user.password = req.body.password;
    await user.save();
    
+   console.log('changePassword - Password updated successfully');
    res.status(200).json({
     success:true,
     user

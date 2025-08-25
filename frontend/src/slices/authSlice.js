@@ -145,12 +145,42 @@ const authSlice = createSlice({
                 ...state,
                 isUpdated: false
             }
-        }
+        },
+         updatePasswordRequest(state, action){
+            console.log('updatePasswordRequest called, setting loading to true and isUpdated to false');
+            return{
+                ...state,
+                loading: true,
+                isUpdated: false,
+                error: null
+            }
+
+        },
+        updatePasswordSuccess(state, action){
+            console.log('updatePasswordSuccess called, setting isUpdated to true');
+            return{
+                ...state,
+                loading: false,
+                isUpdated: true,
+                error: null
+            }
+        },
+        updatePasswordFail(state, action){
+            console.log('updatePasswordFail called, setting loading to false and error:', action.payload);
+            console.log('updatePasswordFail - Previous state:', state);
+            const newState = {
+                ...state,
+                loading: false,
+                error: action.payload
+            };
+            console.log('updatePasswordFail - New state:', newState);
+            return newState;
+        },
     }
 });
 
 const{ actions, reducer } = authSlice;
 
-export const {loginRequest, loginSuccess, loginFail,clearError,registerRequest,registerSuccess,registerFail,loadUserRequest,loadUserSuccess,loadUserFail, logout,updateProfileRequest,updateProfileSuccess,updateProfileFail, UPDATE_PROFILE_RESET} = actions;
+export const {loginRequest, loginSuccess, loginFail,clearError,registerRequest,registerSuccess,registerFail,loadUserRequest,loadUserSuccess,loadUserFail, logout,updateProfileRequest,updateProfileSuccess,updateProfileFail, UPDATE_PROFILE_RESET,updatePasswordFail,updatePasswordSuccess,updatePasswordRequest} = actions;
 
 export default reducer;

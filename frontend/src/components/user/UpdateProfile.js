@@ -85,7 +85,7 @@ export default function UpdateProfile() {
 
         if (isUpdated) {
                toast.success("Profile updated successfully!", {
-            position: "bottom-center",
+            position: "top-center",
             autoClose: 3000,
             theme: "colored"
         });
