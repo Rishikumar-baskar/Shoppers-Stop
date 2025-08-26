@@ -176,11 +176,69 @@ const authSlice = createSlice({
             console.log('updatePasswordFail - New state:', newState);
             return newState;
         },
+         forgotPasswordRequest(state, action){
+           // console.log('updatePasswordRequest called, setting loading to true and isUpdated to false');
+            return{
+                ...state,
+                loading: true,
+                message: null,
+                
+            }
+
+        },
+        forgotPasswordSuccess(state, action){
+            //console.log('updatePasswordSuccess called, setting isUpdated to true');
+            return{
+                ...state,
+                loading: false,
+                message: action.payload.message,
+            }
+        },
+        forgotPasswordFail(state, action){
+            //console.log('updatePasswordFail called, setting loading to false and error:', action.payload);
+           // console.log('updatePasswordFail - Previous state:', state);
+            const newState = {
+                ...state,
+                loading: false,
+                error: action.payload
+            };
+           // console.log('updatePasswordFail - New state:', newState);
+            return newState;
+        },
+         resetPasswordRequest(state, action){
+           // console.log('updatePasswordRequest called, setting loading to true and isUpdated to false');
+            return{
+                ...state,
+                loading: true,
+                
+            }
+
+        },
+        resetPasswordSuccess(state, action){
+            //console.log('updatePasswordSuccess called, setting isUpdated to true');
+            return{
+                ...state,
+                loading: false,
+                isAuthenticated: true,
+                user: action.payload.user,
+            }
+        },
+        resetPasswordFail(state, action){
+            //console.log('updatePasswordFail called, setting loading to false and error:', action.payload);
+           // console.log('updatePasswordFail - Previous state:', state);
+            const newState = {
+                ...state,
+                loading: false,
+                error: action.payload
+            };
+           // console.log('updatePasswordFail - New state:', newState);
+            return newState;
+        },
     }
 });
 
 const{ actions, reducer } = authSlice;
 
-export const {loginRequest, loginSuccess, loginFail,clearError,registerRequest,registerSuccess,registerFail,loadUserRequest,loadUserSuccess,loadUserFail, logout,updateProfileRequest,updateProfileSuccess,updateProfileFail, UPDATE_PROFILE_RESET,updatePasswordFail,updatePasswordSuccess,updatePasswordRequest} = actions;
+export const {loginRequest, loginSuccess, loginFail,clearError,registerRequest,registerSuccess,registerFail,loadUserRequest,loadUserSuccess,loadUserFail, logout,updateProfileRequest,updateProfileSuccess,updateProfileFail, UPDATE_PROFILE_RESET,updatePasswordFail,updatePasswordSuccess,updatePasswordRequest,forgotPasswordFail,forgotPasswordSuccess,forgotPasswordRequest,resetPasswordFail,resetPasswordRequest,resetPasswordSuccess} = actions;
 
 export default reducer;

@@ -1,4 +1,4 @@
-import { clearError, loginFail, loginRequest, loginSuccess, registerRequest,registerSuccess,registerFail, loadUserRequest,loadUserSuccess,loadUserFail, logout, updateProfileRequest, updateProfileSuccess, updateProfileFail,updatePasswordFail,updatePasswordSuccess,updatePasswordRequest } from "../slices/authSlice";
+import { clearError, loginFail, loginRequest, loginSuccess, registerRequest,registerSuccess,registerFail, loadUserRequest,loadUserSuccess,loadUserFail, logout, updateProfileRequest, updateProfileSuccess, updateProfileFail,updatePasswordFail,updatePasswordSuccess,updatePasswordRequest, forgotPasswordRequest, forgotPasswordSuccess, forgotPasswordFail, resetPasswordRequest, resetPasswordSuccess, resetPasswordFail } from "../slices/authSlice";
 import axios from 'axios';
 import { setToken, getToken, removeToken } from '../utils/tokenUtils';
 
@@ -182,5 +182,97 @@ export const updatePassword = (formData) => async (dispatch) =>{
         console.error('updatePassword - Final error message:', errorMessage);
         
         dispatch(updatePasswordFail(errorMessage))
+    }
+};
+export const forgotPassword = (formData) => async (dispatch) =>{
+        const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:8000'
+
+    try{
+        console.log('forgotPassword - Starting password update...');
+        console.log('forgotPassword - Form data:', formData);
+        dispatch(forgotPasswordRequest())
+        
+        // Get token from localStorage
+       // const token = getToken();
+       // console.log('updatePassword - Token found:', !!token);
+        
+       // if (!token) {
+       //     console.log('updatePassword - No token found');
+        //    dispatch(updatePasswordFail('No token found'));
+         //   return;
+       // }
+        
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+               // 'Authorization': `Bearer ${token}`
+            }
+        }
+        
+       // console.log('updatePassword - Making request to:', `${baseURL}/api/v1/password/change`);
+       // console.log('updatePassword - Request config:', config);
+        
+        const {data} = await axios.post(`${baseURL}/api/v1/password/forgot`, formData, config);
+        
+      //  console.log('updatePassword - Response:', response.data);
+       // console.log('Password update successful');
+        dispatch(forgotPasswordSuccess(data));
+
+    }catch(error){
+       // console.error('updatePassword - Error details:', error);
+       // console.error('updatePassword - Error response:', error.response?.data);
+      //  console.error('updatePassword - Error status:', error.response?.status);
+      //  console.error('updatePassword - Error message:', error.response?.data?.message);
+        
+        const errorMessage = error.response?.data?.message || error.message || 'Password update failed';
+       // console.error('updatePassword - Final error message:', errorMessage);
+        
+        dispatch(forgotPasswordFail(errorMessage))
+    }
+};
+export const resetPassword = (formData,token) => async (dispatch) =>{
+        const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:3000'
+
+    try{
+        console.log('forgotPassword - Starting password update...');
+        console.log('forgotPassword - Form data:', formData);
+        dispatch(resetPasswordRequest())
+        
+        // Get token from localStorage
+       // const token = getToken();
+       // console.log('updatePassword - Token found:', !!token);
+        
+       // if (!token) {
+       //     console.log('updatePassword - No token found');
+        //    dispatch(updatePasswordFail('No token found'));
+         //   return;
+       // }
+        
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+               // 'Authorization': `Bearer ${token}`
+            }
+        }
+        
+       // console.log('updatePassword - Making request to:', `${baseURL}/api/v1/password/change`);
+       // console.log('updatePassword - Request config:', config);
+        
+        const {data} = await axios.post(`${baseURL}/password/reset/${token}`, formData, config);
+        
+      //  console.log('updatePassword - Response:', response.data);
+       // console.log('Password update successful');
+        dispatch(resetPasswordSuccess(data))
+
+    }catch(error){
+       // console.error('updatePassword - Error details:', error);
+       // console.error('updatePassword - Error response:', error.response?.data);
+      //  console.error('updatePassword - Error status:', error.response?.status);
+      //  console.error('updatePassword - Error message:', error.response?.data?.message);
+        
+        const errorMessage = error.response?.data?.message || error.message || 'Password update failed';
+       // console.error('updatePassword - Final error message:', errorMessage);
+        
+        dispatch(resetPasswordFail(errorMessage))
     }
 };
