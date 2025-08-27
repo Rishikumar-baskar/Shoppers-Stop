@@ -8,6 +8,7 @@ export default function ResetPassword() {
 
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [passwordResetAttempted, setPasswordResetAttempted] = useState(false);
     const dispatch = useDispatch();
     const { isAuthenticated, error } = useSelector(state => state.authState);
     const navigate = useNavigate();
@@ -19,10 +20,11 @@ export default function ResetPassword() {
         formData.append('confirmPassword', confirmPassword);
         
         dispatch(resetPassword(formData,token))
+        setPasswordResetAttempted(true);
     }
 
     useEffect(()=> {
-        if(isAuthenticated){
+        if(passwordResetAttempted && isAuthenticated){
             toast.success('Password Reset Success', {
                 type:'success',
                 position:'top-center',
@@ -39,7 +41,7 @@ export default function ResetPassword() {
             })
         }
 
-    },[isAuthenticated, error,dispatch,navigate])
+    },[isAuthenticated, error,dispatch,navigate,passwordResetAttempted])
 
 
 

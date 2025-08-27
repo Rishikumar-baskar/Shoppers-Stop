@@ -84,15 +84,14 @@ export default function UpdateProfile() {
         }
 
         if (isUpdated) {
-               toast.success("Profile updated successfully!", {
-            position: "top-center",
-            autoClose: 3000,
-            theme: "colored"
-        });
+            toast.success("Profile updated successfully!", {
+                position: "top-center",
+                autoClose: 3000,
+                theme: "colored"
+            });
             // Navigate to profile page after successful update
             navigate('/myprofile');
             dispatch(UPDATE_PROFILE_RESET());
-            
         }
 
     },[user, error, isUpdated, navigate])
