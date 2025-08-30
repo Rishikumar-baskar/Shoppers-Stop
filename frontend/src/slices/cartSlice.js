@@ -13,38 +13,40 @@ const cartSlice = createSlice({
                 ...state,
                 loading: true,
             }
-
         },
         addCartItemSuccess(state, action){
-            
             const item = action.payload
+            const isItemExist = state.items.find( i => i.product === item.product);
 
-            const isItemExist = state.items.find( i => i.product == item.product);
             if(isItemExist){
-                state = {
+                // Item already exists, just update loading state
+                return {
                     ...state,
                     loading: false,
                 }
-            }
-            else{
-                state = {
-                    items: [ ...state.items, item],
+            } else {
+                // Add new item to cart
+                const newState = {
+                    items: [...state.items, item],
                     loading: false,
                 }
-                localStorage.setItem('cartItems', JSON.stringify(state.items));
+                // Update localStorage
+                localStorage.setItem('cartItems', JSON.stringify(newState.items));
+                return newState;
             }
-            return state
-              
-
-
-    
         },
-
+        addCartItemFail(state, action){
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        }
     }
 });
 
 const{ actions, reducer } = cartSlice;
 
-export const {addCartItemRequest  , addCartItemSuccess } = actions;
+export const {addCartItemRequest, addCartItemSuccess, addCartItemFail} = actions;
 
 export default reducer;
