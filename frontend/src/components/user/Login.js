@@ -4,8 +4,8 @@ import { clearAuthError, login } from "../../actions/userActions";
 import {useDispatch, useSelector} from 'react-redux';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from "react-toastify";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { getToken } from '../../utils/tokenUtils';
 
 
 export default function Login() {
@@ -13,8 +13,9 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
     const {loading, error, isAuthenticated } = useSelector(state => state.authState);
-    
+
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(login(email, password))
@@ -23,10 +24,20 @@ export default function Login() {
     useEffect(() => {
         // Redirect if already authenticated
         if(isAuthenticated){
-            navigate('/');
+            // Navigate to intended page or home
+            const from = location.state?.from || '/';
+            navigate(from, { replace: true });
             return;
         }
-        
+
+        // Show toast if redirected from protected route and not authenticated and no token
+        if (!isAuthenticated && location.state?.message && !getToken()) {
+            toast(location.state.message, {
+                position: "bottom-center",
+                type: 'error'
+            });
+        }
+
         if(error) {
             console.log("Login error:", error);
             toast(error,{
@@ -35,7 +46,7 @@ export default function Login() {
                 onOpen: ()=>{ dispatch(clearAuthError()) }
             });
         }
-    },[error, isAuthenticated, navigate, dispatch])
+    },[error, isAuthenticated, navigate, dispatch, location.state])
     
     // Don't render the form if user is already authenticated
     if(isAuthenticated) {
@@ -45,7 +56,6 @@ export default function Login() {
     return (
         <Fragment>
             <MetaData title={'Login'}/>
-            <ToastContainer/>
             <div className="row wrapper">
                 <div className="col-10 col-lg-5">
                     <form onSubmit={submitHandler} className="shadow-lg" method="POST" action="/login">

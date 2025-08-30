@@ -10,16 +10,43 @@ export default function ResetPassword() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordResetAttempted, setPasswordResetAttempted] = useState(false);
     const dispatch = useDispatch();
-    const { isAuthenticated, error } = useSelector(state => state.authState);
+    const { isAuthenticated, error, loading } = useSelector(state => state.authState);
     const navigate = useNavigate();
     const{token} = useParams();
     const submitHandler = (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('password', password);
-        formData.append('confirmPassword', confirmPassword);
-        
-        dispatch(resetPassword(formData,token))
+
+        // Client-side validation
+        if (!password || !confirmPassword) {
+            toast.error('Please fill in both password fields', {
+                position: 'bottom-center',
+                type: 'error'
+            });
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            toast.error('Passwords do not match', {
+                position: 'bottom-center',
+                type: 'error'
+            });
+            return;
+        }
+
+        if (password.length < 6) {
+            toast.error('Password must be at least 6 characters long', {
+                position: 'bottom-center',
+                type: 'error'
+            });
+            return;
+        }
+
+        const passwordData = {
+            password,
+            confirmPassword
+        };
+
+        dispatch(resetPassword(passwordData, token));
         setPasswordResetAttempted(true);
     }
 
@@ -29,7 +56,13 @@ export default function ResetPassword() {
                 type:'success',
                 position:'top-center',
             })
-            navigate('/')
+            // Clear form and navigate to home after a brief delay
+            setTimeout(() => {
+                setPassword('');
+                setConfirmPassword('');
+                setPasswordResetAttempted(false);
+                navigate('/', { replace: true });
+            }, 1500);
             return;
 
         }
@@ -76,8 +109,9 @@ export default function ResetPassword() {
                     <button
                         id="new_password_button"
                         type="submit"
-                        className="btn btn-block py-3">
-                        Set Password
+                        className="btn btn-block py-3"
+                        disabled={loading}>
+                        {loading ? 'Setting Password...' : 'Set Password'}
                     </button>
 
                 </form>

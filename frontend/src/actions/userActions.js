@@ -230,37 +230,37 @@ export const forgotPassword = (formData) => async (dispatch) =>{
         dispatch(forgotPasswordFail(errorMessage))
     }
 };
-export const resetPassword = (formData,token) => async (dispatch) =>{
-        const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:8000'
+export const resetPassword = (passwordData, token) => async (dispatch) => {
+    const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:8000'
 
-    try{
+    try {
         console.log('resetPassword - Starting password reset...');
-        console.log('resetPassword - Form data:', formData);
+        console.log('resetPassword - Password data:', passwordData);
         dispatch(resetPasswordRequest())
-        
+
         const config = {
             headers: {
                 'Content-type': 'application/json',
             }
         }
-        
+
         console.log('resetPassword - Making request to:', `${baseURL}/api/v1/password/reset/${token}`);
-        
-        const {data} = await axios.post(`${baseURL}/api/v1/password/reset/${token}`, formData, { ...config, withCredentials: true });
-        
+
+        const { data } = await axios.post(`${baseURL}/api/v1/password/reset/${token}`, passwordData, { ...config, withCredentials: true });
+
         console.log('resetPassword - Response:', data);
         console.log('Password reset successful');
         dispatch(resetPasswordSuccess(data))
 
-    }catch(error){
+    } catch (error) {
         console.error('resetPassword - Error details:', error);
         console.error('resetPassword - Error response:', error.response?.data);
         console.error('resetPassword - Error status:', error.response?.status);
         console.error('resetPassword - Error message:', error.response?.data?.message);
-        
+
         const errorMessage = error.response?.data?.message || error.message || 'Password reset failed';
         console.error('resetPassword - Final error message:', errorMessage);
-        
+
         dispatch(resetPasswordFail(errorMessage))
     }
 };
