@@ -42,7 +42,7 @@ export default function Home() {
                         </div>
                     </section>
                     
-                    {productsCount > resPerPage && productsCount > 0 ?
+                    {productsCount > 0 && resPerPage > 0 && Math.ceil(productsCount / resPerPage) > 1 ?
                         <div className="d-flex justify-content-center mt-5">
                             <Pagination
                                 activePage={currentPage}

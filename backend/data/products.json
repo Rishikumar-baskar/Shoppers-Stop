@@ -88,5 +88,98 @@
         "comment": "Nice hardcover, arrived quickly."
       }
     ]
+  },
+  {
+    "name": "Smart Fitness Watch",
+    "price": 199.99,
+    "description": "Advanced fitness tracker with heart rate monitoring, GPS, and sleep tracking.",
+    "ratings": "4.6",
+    "images": [
+      { "image": "https://example.com/images/watch1.jpg" }
+    ],
+    "category": "Electronics",
+    "seller": "TechFit",
+    "stock": 45,
+    "numOfReviews": 2,
+    "reviews": [
+      {
+        "name": "Grace",
+        "rating": "5",
+        "comment": "Amazing features and very accurate tracking!"
+      },
+      {
+        "name": "Henry",
+        "rating": "4",
+        "comment": "Great watch, battery life could be better."
+      }
+    ]
+  },
+  {
+    "name": "Organic Green Tea",
+    "price": 12.99,
+    "description": "Premium organic green tea leaves, 100g pack. Rich in antioxidants.",
+    "ratings": "4.7",
+    "images": [
+      { "image": "https://example.com/images/tea1.jpg" }
+    ],
+    "category": "Food",
+    "seller": "TeaLeaf",
+    "stock": 150,
+    "numOfReviews": 1,
+    "reviews": [
+      {
+        "name": "Ivy",
+        "rating": "5",
+        "comment": "Delicious and high quality tea!"
+      }
+    ]
+  },
+  {
+    "name": "Portable Bluetooth Speaker",
+    "price": 39.99,
+    "description": "Compact wireless speaker with excellent sound quality and waterproof design.",
+    "ratings": "4.3",
+    "images": [
+      { "image": "https://example.com/images/speaker1.jpg" }
+    ],
+    "category": "Headphones",
+    "seller": "SoundWave",
+    "stock": 80,
+    "numOfReviews": 0,
+    "reviews": []
+  },
+  {
+    "name": "Yoga Mat Premium",
+    "price": 29.99,
+    "description": "Non-slip yoga mat made from eco-friendly materials, 6mm thick.",
+    "ratings": "4.8",
+    "images": [
+      { "image": "https://example.com/images/mat1.jpg" }
+    ],
+    "category": "Sports",
+    "seller": "ZenFitness",
+    "stock": 60,
+    "numOfReviews": 1,
+    "reviews": [
+      {
+        "name": "Jack",
+        "rating": "5",
+        "comment": "Perfect grip and very comfortable!"
+      }
+    ]
+  },
+  {
+    "name": "Wireless Charging Pad",
+    "price": 24.99,
+    "description": "Fast wireless charging pad compatible with all Qi-enabled devices.",
+    "ratings": "4.4",
+    "images": [
+      { "image": "https://example.com/images/charger1.jpg" }
+    ],
+    "category": "Electronics",
+    "seller": "ChargeTech",
+    "stock": 95,
+    "numOfReviews": 0,
+    "reviews": []
   }
 ]

@@ -5,7 +5,7 @@ const initialState = {
   products: [],
   productsCount: 0,
   error: null,
-  resPerPage: 2,
+  resPerPage: 4,
 };
 
 const productsSlice = createSlice({
