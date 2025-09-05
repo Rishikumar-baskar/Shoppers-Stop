@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux';
 import{decreaseCartItemQty,increaseCartItemQty,removeItemFromCart} from '../../slices/cartSlice'
 
@@ -7,6 +7,9 @@ export default function Cart() {
     
     const {items} = useSelector(state => state.cartState)
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { isAuthenticated } = useSelector(state => state.authState);
+
     
     const increaseQty = (item) => {
       const count = item.quantity;
@@ -18,6 +21,14 @@ export default function Cart() {
       const count = item.quantity;
       if(count == 1) return;
       dispatch(decreaseCartItemQty(item.product))
+    }
+
+    const checkOutHandler = () =>{
+      if (isAuthenticated) {
+      navigate("/shipping");
+    } else {
+      navigate("/login?redirect=shipping");}
+
     }
 
 
@@ -98,6 +109,7 @@ return (
             <button
               id="checkout_btn"
               className="btn btn-primary btn-block"
+              onClick={checkOutHandler}
             >
               Check out
             </button>
