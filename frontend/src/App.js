@@ -9,7 +9,7 @@ import ProductDetail from './components/product/productDetail';
 import ProductSearch from './components/product/productSearch';
 import Login from './components/user/Login';
 import Register from './components/user/Register';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import store from './store';
 import { loadUser } from './actions/userActions';
 import Header from './components/layouts/Header';
@@ -23,8 +23,13 @@ import ResetPassword from './components/user/ResetPassword';
 import Cart from './components/cart/Cart';
 import Shipping from './components/cart/Shipping';
 import ConfirmOrder from './components/cart/ConfirmOrder';
+import Payment from './components/cart/Payment';
+import axios from 'axios';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 function App() {
+    const [stripeApiKey, setStripeApiKey] = useState("")
     useEffect(() => {
         // Debug: Log environment variable
         //console.log('REACT_APP_BASE_URL:', process.env.REACT_APP_BASE_URL);
@@ -37,6 +42,19 @@ function App() {
         if (token) {
             store.dispatch(loadUser());
         }
+        async function getStripeApiKey(){
+            const token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    'Authorization': token ? `Bearer ${token}` : ''
+                }
+            };
+            const { data}  = await axios.get('/api/v1/stripeapi', config)
+            setStripeApiKey(data.stripeApiKey)
+        }
+        getStripeApiKey()
+            
+        
     }, []);
 
     return (
@@ -72,6 +90,17 @@ function App() {
                         <Route path='/cart' element={<Cart />} />
                         <Route path='/shipping' element={<Shipping />} />
                         <Route path='/order/confirm' element={<ProtectedRoute><ConfirmOrder /></ProtectedRoute>} />
+                       {stripeApiKey && (
+    <Route path='/payment' element={
+        <ProtectedRoute>
+            <Elements stripe={loadStripe(stripeApiKey)}>
+                <Payment />
+            </Elements>
+        </ProtectedRoute>
+    } />
+)}
+
+
 
 
 
