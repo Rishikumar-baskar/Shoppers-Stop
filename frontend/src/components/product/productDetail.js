@@ -16,7 +16,7 @@ export default function ProductDetail() {
 
     const increaseQty = () => {
         const count = document.querySelector('.count')
-            if(product.stock ==0 || count.valueAsNumber >= product.stock ) return;
+            if(product.stock === 0 || count.valueAsNumber >= product.stock ) return;
             const qty = count.valueAsNumber + 1;
             setQuantity(qty);
 
@@ -25,7 +25,7 @@ export default function ProductDetail() {
     }
     const decreaseQty = () => {
         const count = document.querySelector('.count')
-            if(count.valueAsNumber == 1 ) return;
+            if(count.valueAsNumber === 1 ) return;
             const qty = count.valueAsNumber - 1;
             setQuantity(qty);
 
@@ -72,7 +72,7 @@ export default function ProductDetail() {
 
                                 <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
                             </div>
-                            <button type="button" id="cart_btn" disabled={product.stock==0?true:false} onClick={()=>(dispatch(addCartItem(product._id, quantity)))} className="btn btn-primary d-inline ml-4">Add to Cart</button>
+                            <button type="button" id="cart_btn" disabled={product.stock===0?true:false} onClick={()=>(dispatch(addCartItem(product._id, quantity)))} className="btn btn-primary d-inline ml-4">Add to Cart</button>
 
                             <hr />
 

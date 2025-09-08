@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../../actions/userActions';
-import { DropdownButton, Dropdown, Image } from 'react-bootstrap'
+import { Dropdown, Image } from 'react-bootstrap'
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 
 // Search Component

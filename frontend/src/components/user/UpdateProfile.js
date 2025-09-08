@@ -94,7 +94,7 @@ export default function UpdateProfile() {
             dispatch(UPDATE_PROFILE_RESET());
         }
 
-    },[user, error, isUpdated, navigate])
+    },[user, error, isUpdated, navigate, dispatch])
 
     return (
         <div className="container mt-5">

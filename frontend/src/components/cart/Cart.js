@@ -13,13 +13,13 @@ export default function Cart() {
     
     const increaseQty = (item) => {
       const count = item.quantity;
-      if(item.stock == 0 || count>= item.stock) return;
+      if(item.stock === 0 || count >= item.stock) return;
       dispatch(increaseCartItemQty(item.product))
     }
 
     const decreaseQty = (item) => {
       const count = item.quantity;
-      if(count == 1) return;
+      if(count === 1) return;
       dispatch(decreaseCartItemQty(item.product))
     }
 
@@ -36,7 +36,7 @@ export default function Cart() {
 return (
 
     <Fragment>
-        {items.length==0?
+        {items.length===0?
         <h2 className="mt-5">Your Cart is Empty</h2>:
  <Fragment>
       <h2 className="mt-5">Your Cart: <b>{items.length}</b></h2>
@@ -44,7 +44,7 @@ return (
         <div className="col-12 col-lg-8">
           <Fragment>
             {items.map(item =>(
-                <Fragment>
+                <Fragment key={item.product}>
                     <div className="cart-item">
               <div className="row">
                 <div className="col-4 col-lg-3">

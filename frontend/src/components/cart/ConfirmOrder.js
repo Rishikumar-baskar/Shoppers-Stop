@@ -29,7 +29,7 @@ export default function ConfirmOrder () {
 
     useEffect(()=>{
         validateShipping(shippingInfo, navigate)
-    },[])
+    },[shippingInfo, navigate])
 
     return (
         <Fragment>
@@ -47,7 +47,7 @@ export default function ConfirmOrder () {
                 <h4 className="mt-4">Your Cart Items:</h4>
 
                     {cartItems.map(item => (
-                            <Fragment>
+                            <Fragment key={item.product}>
                                 <div className="cart-item my-1">
                                     <div className="row">
                                         <div className="col-4 col-lg-2">

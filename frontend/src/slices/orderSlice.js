@@ -20,6 +20,9 @@ const orderSlice = createSlice({
             }
         },
         createOrderSuccess(state, action) {
+            console.log('Redux slice: createOrderSuccess called with action:', action);
+            console.log('Redux slice: action.payload:', action.payload);
+            console.log('Redux slice: action.payload.order:', action.payload?.order);
             return {
                 ...state,
                 loading: false,
