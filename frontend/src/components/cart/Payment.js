@@ -35,20 +35,7 @@ export default function Payment() {
         }
     };
 
-    const order = {
-        orderItems: cartItems,
-        shippingInfo
-    };
-
-    if(orderInfo) {
-        order.itemsPrice = orderInfo.itemsPrice;
-        order.shippingPrice = orderInfo.shippingPrice;
-        order.taxPrice = orderInfo.taxPrice;
-        order.totalPrice = orderInfo.totalPrice;
-    }
-
     useEffect(() => {
-        // Only show order error if it's from a recent payment attempt, not from previous sessions
         if(orderError && payBtnDisabled) {
             toast.error(orderError, {
                 position: "bottom-center",
@@ -95,9 +82,19 @@ export default function Payment() {
                     position: "bottom-center"
                 });
 
-                order.paymentInfo = {
-                    id: result.paymentIntent.id,
-                    status: result.paymentIntent.status
+                // Build order after payment succeeds
+                const order = {
+                    orderItems: cartItems,
+                    shippingInfo,
+                    itemsPrice: orderInfo.itemsPrice,
+                    shippingPrice: orderInfo.shippingPrice,
+                    taxPrice: orderInfo.taxPrice,
+                    totalPrice: orderInfo.totalPrice,
+                    paymentInfo: {
+                        id: result.paymentIntent.id,
+                        status: result.paymentIntent.status
+                    },
+                    paidAt: new Date().toISOString()
                 };
 
                 dispatch(orderCompleted());
