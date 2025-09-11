@@ -92,6 +92,7 @@ function App() {
                         <Route path='/shipping' element={<Shipping />} />
                         <Route path='/order/confirm' element={<ProtectedRoute><ConfirmOrder /></ProtectedRoute>} />
                         <Route path='/order/success' element={<ProtectedRoute><OrderSuccess /></ProtectedRoute>} />
+                        <Route path='/orders' element={<ProtectedRoute><OrderSuccess /></ProtectedRoute>} />
 
                         {stripeApiKey && (
                             <Route path='/payment' element={
