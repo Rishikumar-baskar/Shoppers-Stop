@@ -35,7 +35,7 @@ export const createOrder = order => async (dispatch) => {
         console.log('createOrder action called with:', order);
         dispatch(createOrderRequest());
         const config = getConfig();
-        console.log('Making API call to /api/v1/order/new with config:', config);
+        console.log('Makings API call to /api/v1/order/new with config:', config);
         const { data } = await axios.post('/api/v1/order/new', order, config);
         console.log('Order creation successful, response:', data);
         dispatch(createOrderSuccess({ order: data.order, paymentInfo: data.paymentInfo }));
@@ -45,12 +45,22 @@ export const createOrder = order => async (dispatch) => {
     }
 };
 
+// export const userOrders = () => async (dispatch) => {
+//     try {
+//         dispatch(userOrdersRequest());
+//         const config = getConfig();
+//         const { data } = await axios.get('/api/v1/myorders', config);
+//         dispatch(userOrdersSuccess(data));
+//     } catch (error) {
+//         dispatch(userOrdersFail(error.response?.data?.message || error.message || 'Failed to fetch orders'));
+//     }
+// };
 export const userOrders = () => async (dispatch) => {
     try {
         dispatch(userOrdersRequest());
         const config = getConfig();
         const { data } = await axios.get('/api/v1/myorders', config);
-        dispatch(userOrdersSuccess(data));
+        dispatch(userOrdersSuccess({ orders: data.orders }));  // Pass only the orders array
     } catch (error) {
         dispatch(userOrdersFail(error.response?.data?.message || error.message || 'Failed to fetch orders'));
     }

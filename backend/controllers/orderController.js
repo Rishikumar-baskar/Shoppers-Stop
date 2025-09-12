@@ -52,8 +52,8 @@ exports.myOrders = catchAsyncError(async(req, res, next) => {
    
    res.status(200).json({
     success: true,
-    Orders
-   })   
+    orders: Orders
+   })
 })
 
 //Admin Get All Orders - api/v1/orders
