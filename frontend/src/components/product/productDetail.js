@@ -6,6 +6,7 @@ import { getProduct } from "../../actions/productAction";
 import Loader from '../layouts/Loader'
 import MetaData from "../layouts/MetaData";
 import { addCartItem } from "../../actions/cartActions";
+import {Modal} from 'react-bootstrap';
 //import { Carousel } from 'react-bootstrap';
 
 export default function ProductDetail() {
@@ -33,6 +34,16 @@ export default function ProductDetail() {
         
     }
 
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    const [rating, setRating] = useState(1);
+
+
+
+
+
     useEffect(() => {
         dispatch(getProduct(id))
     }, [dispatch,id])
@@ -45,7 +56,7 @@ export default function ProductDetail() {
                     <div className="row f-flex justify-content-around">
                         <div className="col-12 col-lg-5 img-fluid" id="product_image">
                            
-                            <img src="./images/products/3.jpg" alt="sdf" height="500" width="500" />
+                            <img src={product.images && product.images.length > 0 ? `http://127.0.0.1:8000/uploads/${product.images[0].image}` : '/images/default_avatar.png'} alt={product.name} height="500" width="500" />
 
                             
                         </div>
@@ -85,8 +96,35 @@ export default function ProductDetail() {
                             <hr />
                             <p id="product_seller mb-3">Sold by: <strong>{product.seller}</strong></p>
 
+                            <button onClick={handleShow}  id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal">
+                                Submit Your Review
+                           </button>
 
-                            <div className="rating w-50"></div>
+                            <div className="row mt-2 mb-5">
+                <div className="rating w-50">
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Submit Review</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <ul className="stars">
+                                {
+                                    [1,2,3,4,5].map(star =>(
+                                      <li value={star} onClick={()=>setRating(star)} className={`star ${star<=rating?'orange':''}`} onMouseOver={(e) => e.target.classList.add('yellow')} onMouseOut={(e) => e.target.classList.remove('yellow')}><i className="fa fa-star"></i></li>
+                                    ))
+                                }
+                                
+                            </ul>
+
+                            <textarea name="review" id="review" className="form-control mt-3" placeholder="Write your review here..."></textarea>
+
+                            <button className="btn my-3 float-right review-btn px-4 text-white">
+                                Submit
+                            </button>
+                        </Modal.Body>
+                    </Modal>
+                </div>
+            </div>
 
                         </div>
 
