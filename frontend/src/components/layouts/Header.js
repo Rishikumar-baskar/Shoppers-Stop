@@ -50,7 +50,7 @@ export default function Header() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { isAuthenticated, user } = useSelector(state => state.authState);
-    const { items:cartItems } = useSelector(state => state.cartState);
+    const { items: cartItems } = useSelector(state => state.cartState);
 
     const handleLogout = () => {
         dispatch(logoutUser());
@@ -85,6 +85,8 @@ export default function Header() {
                                 <span>{user?.name}</span>
                             </DropdownToggle>
                             <Dropdown.Menu>
+                                {user.role === 'admin' &&  <Dropdown.Item className='text-dark' onClick={() => { navigate('/admin/dashboard') }}>Dashboard</Dropdown.Item>}
+
                                 <Dropdown.Item className='text-dark' onClick={() => { navigate('/myprofile') }}>Profile</Dropdown.Item>
                                 <Dropdown.Item className='text-dark' onClick={() => { navigate('/orders') }}>Orders</Dropdown.Item>
 
@@ -102,7 +104,7 @@ export default function Header() {
                     </div>
                 )}
 
-               <Link to="/cart"> <span id="cart" className="ml-3">Cart</span> </Link>
+                <Link to="/cart"> <span id="cart" className="ml-3">Cart</span> </Link>
                 <span className="ml-1" id="cart_count">{cartItems.length}</span>
             </div>
         </nav>

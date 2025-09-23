@@ -169,4 +169,12 @@ exports.deleteReview = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
     success: true
   })
-})
+});
+// get admin products  - api/v1/admin/products
+exports.getAdminProducts = catchAsyncError(async (req, res, next) =>{
+    const products = await Product.find();
+    res.status(200).send({
+        success: true,
+        products
+    })
+});

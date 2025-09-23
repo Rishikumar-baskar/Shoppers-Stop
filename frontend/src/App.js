@@ -30,6 +30,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import OrderSuccess from './components/cart/OrderSuccess';
 import UserOrders from './components/order/UserOrders';
 import OrderDetail from './components/order/OrderDetail';
+import Dashboard from './components/Admin/Dashboard';
 
 function App() {
     const [stripeApiKey, setStripeApiKey] = useState("")
@@ -63,7 +64,11 @@ function App() {
     return (
         <div className="App">
             <Router>
+
                 <HelmetProvider>
+                    <Header />
+                    <div className="container container-fluid">
+                    
                     <ToastContainer
                         theme="dark"
                         position="top-center"
@@ -77,7 +82,7 @@ function App() {
                         pauseOnHover
                         style={{ zIndex: 9999 }}
                     />
-                    <Header />
+                    
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='/search/:keyword' element={<ProductSearch />} />
@@ -113,6 +118,10 @@ function App() {
 
 
 
+                    </Routes>
+                    </div>
+                    <Routes>
+                        <Route path='/admin/dashboard' element={<ProtectedRoute adminOnly={true}><Dashboard/></ProtectedRoute>} />
                     </Routes>
                     <Footer />
                 </HelmetProvider>
