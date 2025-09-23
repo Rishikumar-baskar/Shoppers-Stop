@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Fragment } from "react/jsx-runtime";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getProduct } from "../../actions/productAction";
+import { createReview, getProduct } from "../../actions/productAction";
+import { clearReviewSubmitted, clearError } from "../../slices/productSlice";
+import { toast } from 'react-toastify';
 import Loader from '../layouts/Loader'
 import MetaData from "../layouts/MetaData";
 import { addCartItem } from "../../actions/cartActions";
@@ -10,7 +12,7 @@ import {Modal} from 'react-bootstrap';
 //import { Carousel } from 'react-bootstrap';
 
 export default function ProductDetail() {
-    const { loading, product } = useSelector((state) => state.productState);
+    const { loading, product, isReviewSubmitted, error } = useSelector((state) => state.productState);
     const dispatch = useDispatch();
     const { id } = useParams()
     const [quantity, setQuantity] = useState(1);
@@ -39,6 +41,7 @@ export default function ProductDetail() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [rating, setRating] = useState(1);
+    const [comment, setComment] = useState("");
 
 
 
@@ -47,6 +50,23 @@ export default function ProductDetail() {
     useEffect(() => {
         dispatch(getProduct(id))
     }, [dispatch,id])
+
+    useEffect(() => {
+        if(isReviewSubmitted){
+            toast.success('Review submitted successfully');
+            setShow(false);
+            setComment("");
+            dispatch(getProduct(id));
+            dispatch(clearReviewSubmitted());
+        }
+    }, [isReviewSubmitted, dispatch, id])
+
+    useEffect(() => {
+        if(error){
+            toast.error(typeof error === 'string' ? error : 'Failed to submit review');
+            dispatch(clearError());
+        }
+    }, [error, dispatch])
     return (
         <Fragment>
             {loading? <Loader/>:
@@ -116,9 +136,9 @@ export default function ProductDetail() {
                                 
                             </ul>
 
-                            <textarea name="review" id="review" className="form-control mt-3" placeholder="Write your review here..."></textarea>
+                            <textarea name="review" id="review" className="form-control mt-3" placeholder="Write your review here..." value={comment} onChange={(e)=>setComment(e.target.value)}></textarea>
 
-                            <button className="btn my-3 float-right review-btn px-4 text-white">
+                            <button className="btn my-3 float-right review-btn px-4 text-white" onClick={() => dispatch(createReview({ productId: id, rating, comment }))}>
                                 Submit
                             </button>
                         </Modal.Body>

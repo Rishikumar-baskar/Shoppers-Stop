@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createReviewFail, createReviewRequest, createReviewSuccess, productFail, productRequest, productSuccess } from '../slices/productSlice';
+import { getToken } from '../utils/tokenUtils';
 
 export const getProduct = id=> async (dispatch) => {
     const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:8000'
@@ -18,9 +19,11 @@ export const createReview = reviewData=> async (dispatch) => {
     const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:8000'
 
     try{
+        const token = getToken();
         const config = {
             headers : {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                ...(token ? { 'Authorization': `Bearer ${token}` } : {})
             }
         }
         dispatch(createReviewRequest());

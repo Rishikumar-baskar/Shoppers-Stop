@@ -107,32 +107,19 @@ exports.createReview = catchAsyncError(async (req, res, next) => {
 
   const review = {
     user : req.user.id,
-    rating,
+    rating: Number(rating),
     comment
   }
 
   const product = await Product.findById(productId);
-  //finding user already gave review
-  const isReviewed = product.reviews.find(review => {
-    return review.user.toString() == req.user.id.toString()
-  })
 
-  if(isReviewed){
-       product.reviews.forEach(review => {
-        if(review.user.toString() == req.user.id.toString()){
-          review.comment = comment
-          review.rating = rating
-        }
-       })
+  // Always append a new review, even if the same user reviewed before
+  product.reviews.push(review);
+  product.numOfReviews = product.reviews.length;
 
-  }else{
-    //creating the review
-    product.reviews.push(review);
-    product.numOfReviews = product.reviews.length;
-  }
-  //finding average of product review
+  // Recalculate average rating
   product.ratings = product.reviews.reduce((acc, review) => {
-    return review.rating + acc;
+    return Number(review.rating) + acc;
   }, 0) / product.reviews.length;
   product.ratings = isNaN(product.ratings)?0:product.ratings;
 
@@ -141,7 +128,6 @@ exports.createReview = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
     success: true
   })
-
 
 })
 

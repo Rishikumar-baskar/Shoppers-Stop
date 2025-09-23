@@ -17,7 +17,7 @@ const productSchema = new mongoose.Schema({
         required: [true, "please enter product description"]
     },
     ratings: {
-        type: String,
+        type: Number,
         default: 0
     },
     images: [
@@ -67,7 +67,7 @@ const productSchema = new mongoose.Schema({
         {
           user: mongoose.Schema.Types.ObjectId,
             rating: {
-                type: String,
+                type: Number,
                 required: true
             },
             comment: {
