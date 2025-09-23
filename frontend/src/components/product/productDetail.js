@@ -13,6 +13,7 @@ import {Modal} from 'react-bootstrap';
 
 export default function ProductDetail() {
     const { loading, product, isReviewSubmitted, error } = useSelector((state) => state.productState);
+    const { isAuthenticated } = useSelector((state) => state.authState || { isAuthenticated: false });
     const dispatch = useDispatch();
     const { id } = useParams()
     const [quantity, setQuantity] = useState(1);
@@ -39,7 +40,13 @@ export default function ProductDetail() {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        if(!isAuthenticated){
+            toast.error('Login first to submit review');
+            return;
+        }
+        setShow(true);
+    };
     const [rating, setRating] = useState(1);
     const [comment, setComment] = useState("");
 
@@ -138,7 +145,13 @@ export default function ProductDetail() {
 
                             <textarea name="review" id="review" className="form-control mt-3" placeholder="Write your review here..." value={comment} onChange={(e)=>setComment(e.target.value)}></textarea>
 
-                            <button className="btn my-3 float-right review-btn px-4 text-white" onClick={() => dispatch(createReview({ productId: id, rating, comment }))}>
+                            <button className="btn my-3 float-right review-btn px-4 text-white" onClick={() => {
+                                if(!isAuthenticated){
+                                    toast.error('Login first to submit review');
+                                    return;
+                                }
+                                dispatch(createReview({ productId: id, rating, comment }))
+                            }}>
                                 Submit
                             </button>
                         </Modal.Body>
