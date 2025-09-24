@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const categories = ['Electronics','Mobile Phones','Laptops','Accessories','Headphones','Food','Books','Clothes/shoes','Beauty/health','Sports','Outdoor','Home'];
 
@@ -34,6 +35,9 @@ export default function ProductCreate(){
 				}
 			};
 			await axios.post('/api/v1/admin/product/new', data, config);
+			toast.success('Product created successfully!', {
+				position: "bottom-center"
+			});
 			navigate('/admin/products');
 		}catch(err){
 			setError(err.response?.data?.message || err.message);

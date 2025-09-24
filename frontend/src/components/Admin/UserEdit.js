@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function UserEdit(){
 	const navigate = useNavigate();
@@ -50,6 +51,9 @@ export default function UserEdit(){
 				}
 			};
 			await axios.put(`/api/v1/admin/user/${id}`, form, config);
+			toast.success('User updated successfully!', {
+				position: "bottom-center"
+			});
 			navigate('/admin/users');
 		}catch(err){
 			setError(err.response?.data?.message || err.message);

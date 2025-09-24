@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function ReviewsList() {
 	const dispatch = useDispatch();
@@ -63,6 +64,9 @@ export default function ReviewsList() {
 			};
 			await axios.delete(`/api/v1/review?id=${rid}&productId=${productId}`, config);
 			setReviews(prev => prev.filter(r => r._id !== rid));
+			toast.success('Review deleted successfully!', {
+				position: "bottom-center"
+			});
 		}catch(err){
 			setError(err.response?.data?.message || err.message);
 		}

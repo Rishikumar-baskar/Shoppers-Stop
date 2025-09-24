@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const categories = ['Electronics','Mobile Phones','Laptops','Accessories','Headphones','Food','Books','Clothes/shoes','Beauty/health','Sports','Outdoor','Home'];
 
@@ -72,6 +73,9 @@ export default function ProductEdit(){
 			}
 
 			await axios.put(`/api/v1/product/${id}`, data, config);
+			toast.success('Product updated successfully!', {
+				position: "bottom-center"
+			});
 			navigate('/admin/products');
 		}catch(err){
 			setError(err.response?.data?.message || err.message);

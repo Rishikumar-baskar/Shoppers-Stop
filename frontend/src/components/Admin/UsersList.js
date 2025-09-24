@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function UsersList(){
 	const [loading, setLoading] = useState(false);
@@ -17,6 +18,9 @@ export default function UsersList(){
 			};
 			await axios.delete(`/api/v1/admin/user/${uid}`, config);
 			setUsers(prev => prev.filter(u => u._id !== uid));
+			toast.success('User deleted successfully!', {
+				position: "bottom-center"
+			});
 		}catch(err){
 			setError(err.response?.data?.message || err.message);
 		}
