@@ -1,8 +1,13 @@
 import axios from 'axios';
+import { getToken } from '../utils/tokenUtils';
 import {
   productsFail,
   productsRequest,
-  productsSuccess
+  productsSuccess,
+  adminProductsRequest,
+  adminProductsSuccess,
+  adminProductsFail,
+  clearError
 } from '../slices/productsSlice';
 
 export const getProducts = (keyword, price,category,rating, currentPage) => async (dispatch) => {
@@ -34,5 +39,23 @@ export const getProducts = (keyword, price,category,rating, currentPage) => asyn
 
   } catch (error) {
     dispatch(productsFail(error.response?.data?.message || error.message));
+  }
+
+};
+
+export const getAdminProducts = () => async (dispatch) => {
+  const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:8000';
+  try {
+    dispatch(adminProductsRequest());
+    const token = getToken();
+    const config = {
+      headers: {
+        'Authorization': token ? `Bearer ${token}` : ''
+      }
+    };
+    const { data } = await axios.get(`${baseURL}/api/v1/admin/products`, config);
+    dispatch(adminProductsSuccess(data));
+  } catch (error) {
+    dispatch(adminProductsFail(error.response?.data?.message || error.message));
   }
 };

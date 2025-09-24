@@ -26,13 +26,35 @@ const productsSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-  },
+    adminProductsRequest(state) {
+      state.loading = true;
+      state.error = null;
+    },
+    adminProductsSuccess(state, action){
+      state.loading = false;
+      state.products = action.payload.products;
+      state.productsCount = Array.isArray(action.payload.products) ? action.payload.products.length : 0;
+      state.resPerPage = Array.isArray(action.payload.products) ? action.payload.products.length : 0;
+    },
+    adminProductsFail(state, action){
+      state.loading = false;
+      state.error = action.payload;
+    },
+    clearError(state){
+      state.error = null;
+    }
+  }
 });
 
 export const {
   productsRequest,
   productsSuccess,
   productsFail,
+  adminProductsFail,
+  adminProductsRequest,
+  adminProductsSuccess,
+  clearError
+
 } = productsSlice.actions;
 
 export default productsSlice.reducer;
