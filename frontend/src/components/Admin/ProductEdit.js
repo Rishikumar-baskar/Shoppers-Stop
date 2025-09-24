@@ -8,6 +8,8 @@ export default function ProductEdit(){
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const [form, setForm] = useState({ name:'', price:0, description:'', category:'', seller:'', stock:0 });
+	const [images, setImages] = useState([]);
+	const [existingImages, setExistingImages] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
@@ -25,6 +27,7 @@ export default function ProductEdit(){
 					seller: p.seller || '',
 					stock: p.stock || 0
 				});
+				setExistingImages(p.images || []);
 			}catch(err){
 				setError(err.response?.data?.message || err.message);
 			}finally{
@@ -32,6 +35,10 @@ export default function ProductEdit(){
 			}
 		})();
 	},[id])
+
+	const onFiles = (e) => {
+		setImages(Array.from(e.target.files || []));
+	}
 
 	const onChange = (e) => {
 		setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -41,7 +48,30 @@ export default function ProductEdit(){
 		e.preventDefault();
 		try{
 			setLoading(true); setError(null);
-			await axios.put(`/api/v1/product/${id}`, form, { headers: { 'Content-Type':'application/json' }});
+			const token = localStorage.getItem('token');
+
+			let data, config;
+			if(images.length > 0){
+				data = new FormData();
+				Object.entries(form).forEach(([k,v]) => data.append(k, v));
+				images.forEach(img => data.append('images', img));
+				config = {
+					headers: {
+						'Content-Type':'multipart/form-data',
+						'Authorization': token ? `Bearer ${token}` : ''
+					}
+				};
+			}else{
+				data = form;
+				config = {
+					headers: {
+						'Content-Type':'application/json',
+						'Authorization': token ? `Bearer ${token}` : ''
+					}
+				};
+			}
+
+			await axios.put(`/api/v1/product/${id}`, data, config);
 			navigate('/admin/products');
 		}catch(err){
 			setError(err.response?.data?.message || err.message);
@@ -81,6 +111,20 @@ export default function ProductEdit(){
 				<div className="form-group">
 					<label>Stock</label>
 					<input type="number" name="stock" value={form.stock} onChange={onChange} className="form-control" min="0" required />
+				</div>
+				<div className="form-group">
+					<label>Images</label>
+					<input type="file" multiple onChange={onFiles} className="form-control-file" />
+					{existingImages.length > 0 && (
+						<div className="mt-2">
+							<small className="text-muted">Current Images:</small>
+							<div className="d-flex flex-wrap">
+								{existingImages.map((img, index) => (
+									<img key={index} src={img.image} alt={`Product ${index}`} style={{width: '100px', height: '100px', objectFit: 'cover', margin: '5px'}} />
+								))}
+							</div>
+						</div>
+					)}
 				</div>
 				<button className="btn btn-primary" type="submit" disabled={loading}>{loading ? 'Saving...' : 'Save'}</button>
 			</form>

@@ -37,6 +37,7 @@ import ReviewsList from './components/Admin/ReviewsList';
 import UsersList from './components/Admin/UsersList';
 import ProductCreate from './components/Admin/ProductCreate';
 import ProductEdit from './components/Admin/ProductEdit';
+import UserEdit from './components/Admin/UserEdit';
 
 function App() {
     const [stripeApiKey, setStripeApiKey] = useState("")
@@ -132,6 +133,7 @@ function App() {
                         <Route path='/admin/orders' element={<ProtectedRoute adminOnly={true}><OrdersList/></ProtectedRoute>} />
                         <Route path='/admin/reviews' element={<ProtectedRoute adminOnly={true}><ReviewsList/></ProtectedRoute>} />
                         <Route path='/admin/users' element={<ProtectedRoute adminOnly={true}><UsersList/></ProtectedRoute>} />
+                        <Route path='/admin/user/:id' element={<ProtectedRoute adminOnly={true}><UserEdit/></ProtectedRoute>} />
                         <Route path='/admin/products/create' element={<ProtectedRoute adminOnly={true}><ProductCreate/></ProtectedRoute>} />
                         <Route path='/admin/product/:id/edit' element={<ProtectedRoute adminOnly={true}><ProductEdit/></ProtectedRoute>} />
                     </Routes>

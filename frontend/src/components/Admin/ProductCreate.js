@@ -23,10 +23,17 @@ export default function ProductCreate(){
 		e.preventDefault();
 		try{
 			setLoading(true); setError(null);
+			const token = localStorage.getItem('token');
 			const data = new FormData();
 			Object.entries(form).forEach(([k,v]) => data.append(k, v));
 			images.forEach(img => data.append('images', img));
-			await axios.post('/api/v1/admin/product/new', data, { headers: { 'Content-Type':'multipart/form-data' }});
+			const config = {
+				headers: {
+					'Content-Type':'multipart/form-data',
+					'Authorization': token ? `Bearer ${token}` : ''
+				}
+			};
+			await axios.post('/api/v1/admin/product/new', data, config);
 			navigate('/admin/products');
 		}catch(err){
 			setError(err.response?.data?.message || err.message);

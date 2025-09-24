@@ -5,15 +5,43 @@ import axios from 'axios';
 export default function ReviewsList() {
 	const dispatch = useDispatch();
 	const [productId, setProductId] = useState('');
+	const [productName, setProductName] = useState('');
+	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [reviews, setReviews] = useState([]);
 
-	const fetchReviews = async () => {
+	const searchProducts = async (name) => {
+		if (!name.trim()) {
+			setProducts([]);
+			return;
+		}
+		try {
+			const { data } = await axios.get(`/api/v1/products?keyword=${name}&limit=10`);
+			setProducts(data.products || []);
+		} catch (err) {
+			console.error('Error searching products:', err);
+		}
+	}
+
+	const selectProduct = (product) => {
+		setProductId(product._id);
+		setProductName(product.name);
+		setProducts([]);
+		fetchReviews(product._id);
+	}
+
+	const fetchReviews = async (id = productId) => {
 		try{
 			setLoading(true);
 			setError(null);
-			const { data } = await axios.get(`/api/v1/reviews?id=${productId}`);
+			const token = localStorage.getItem('token');
+			const config = {
+				headers: {
+					'Authorization': token ? `Bearer ${token}` : ''
+				}
+			};
+			const { data } = await axios.get(`/api/v1/reviews?id=${id}`, config);
 			setReviews(data.reviews || []);
 		} catch(err){
 			setError(err.response?.data?.message || err.message);
@@ -22,16 +50,18 @@ export default function ReviewsList() {
 		}
 	}
 
-	useEffect(()=>{
-		if(productId){
-			fetchReviews();
-		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	},[])
+	// Removed useEffect that was calling fetchReviews on productId change
+	// Now fetchReviews is called when selecting a product
 
 	const handleDelete = async (rid) => {
 		try{
-			await axios.delete(`/api/v1/review?id=${rid}&productId=${productId}`);
+			const token = localStorage.getItem('token');
+			const config = {
+				headers: {
+					'Authorization': token ? `Bearer ${token}` : ''
+				}
+			};
+			await axios.delete(`/api/v1/review?id=${rid}&productId=${productId}`, config);
 			setReviews(prev => prev.filter(r => r._id !== rid));
 		}catch(err){
 			setError(err.response?.data?.message || err.message);
@@ -43,10 +73,38 @@ export default function ReviewsList() {
 			<div className="row">
 				<div className="col-12 mb-3">
 					<h2>Product Reviews</h2>
-					<div className="d-flex">
-						<input type="text" className="form-control mr-2" placeholder="Enter Product ID" value={productId} onChange={(e)=>setProductId(e.target.value)} />
-						<button className="btn btn-primary" onClick={fetchReviews} disabled={!productId}>Search</button>
+					<div className="position-relative">
+						<input
+							type="text"
+							className="form-control"
+							placeholder="Search product by name..."
+							value={productName}
+							onChange={(e) => {
+								setProductName(e.target.value);
+								searchProducts(e.target.value);
+							}}
+						/>
+						{products.length > 0 && (
+							<div className="position-absolute bg-white border rounded shadow-sm w-100 mt-1" style={{zIndex: 1000, maxHeight: '200px', overflowY: 'auto'}}>
+								{products.map(product => (
+									<div
+										key={product._id}
+										className="p-2 border-bottom cursor-pointer"
+										onClick={() => selectProduct(product)}
+										style={{cursor: 'pointer'}}
+									>
+										{product.name}
+									</div>
+								))}
+							</div>
+						)}
 					</div>
+					{productId && (
+						<div className="mt-2">
+							<small className="text-muted">Selected: {productName}</small>
+							<button className="btn btn-sm btn-outline-secondary ml-2" onClick={() => { setProductId(''); setProductName(''); setReviews([]); }}>Clear</button>
+						</div>
+					)}
 				</div>
 				<div className="col-12">
 					{loading && <p>Loading...</p>}

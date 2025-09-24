@@ -7,11 +7,32 @@ export default function UsersList(){
 	const [error, setError] = useState(null);
 	const [users, setUsers] = useState([]);
 
+	const handleDelete = async (uid) => {
+		try{
+			const token = localStorage.getItem('token');
+			const config = {
+				headers: {
+					'Authorization': token ? `Bearer ${token}` : ''
+				}
+			};
+			await axios.delete(`/api/v1/admin/user/${uid}`, config);
+			setUsers(prev => prev.filter(u => u._id !== uid));
+		}catch(err){
+			setError(err.response?.data?.message || err.message);
+		}
+	}
+
 	useEffect(()=>{
 		(async () => {
 			try{
 				setLoading(true);
-				const { data } = await axios.get('/api/v1/admin/users');
+				const token = localStorage.getItem('token');
+				const config = {
+					headers: {
+						'Authorization': token ? `Bearer ${token}` : ''
+					}
+				};
+				const { data } = await axios.get('/api/v1/admin/users', config);
 				setUsers(data.users || []);
 			} catch(err){
 				setError(err.response?.data?.message || err.message);
@@ -51,7 +72,7 @@ export default function UsersList(){
 												<td>{u.role}</td>
 												<td>
 													<Link className="btn btn-primary" to={`/admin/user/${u._id}`}><i className="fa fa-pencil"></i></Link>
-													<button className="btn btn-danger ml-2" disabled><i className="fa fa-trash"></i></button>
+													<button className="btn btn-danger ml-2" onClick={()=>handleDelete(u._id)}><i className="fa fa-trash"></i></button>
 												</td>
 											</tr>
 										)) : (

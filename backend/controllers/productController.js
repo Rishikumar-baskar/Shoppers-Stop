@@ -33,12 +33,22 @@ exports.getProducts = catchAsyncError(async (req, res, next)=>{
 
 //Create Product - /api/v1/product/new
 exports.newProduct = catchAsyncError(async (req,res,next)=>{
-   req.body.user = req.user.id 
-  const product = await Product.create(req.body);
-     res.status(201).json({
-      success: true,
-      product
-     })
+   req.body.user = req.user.id
+
+   let images = []
+   if(req.files && req.files.length > 0){
+       req.files.forEach(file => {
+           let url = `${process.env.BACKEND_URL}/uploads/product/${file.originalname}`
+           images.push({image: url})
+       })
+       req.body.images = images
+   }
+
+   const product = await Product.create(req.body);
+      res.status(201).json({
+       success: true,
+       product
+      })
 
 });
 
@@ -58,26 +68,35 @@ exports.getSingleProduct = async(req, res, next) => {
 
 //Update product
 exports.updateProduct = async(req, res, next) => {
-  let product = await Product.findById(req.params.id);
+   let product = await Product.findById(req.params.id);
 
-  if(!product){
-  return res.status(404).json(
-    {
-      success: false,
-      message: "product not found"
-    }
-  );
- }
+   if(!product){
+   return res.status(404).json(
+     {
+       success: false,
+       message: "product not found"
+     }
+   );
+  }
 
- product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
- })
+  let images = []
+  if(req.files && req.files.length > 0){
+      req.files.forEach(file => {
+          let url = `${process.env.BACKEND_URL}/uploads/product/${file.originalname}`
+          images.push({image: url})
+      })
+      req.body.images = images
+  }
 
- res.status(200).json({
-  success: true,
-  product
- })
+  product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+       new: true,
+       runValidators: true
+  })
+
+  res.status(200).json({
+   success: true,
+   product
+  })
 }
 
 //DeleteProduct
