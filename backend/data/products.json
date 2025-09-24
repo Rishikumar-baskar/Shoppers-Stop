@@ -181,5 +181,64 @@
     "stock": 95,
     "numOfReviews": 0,
     "reviews": []
+  },
+  {
+    "name": "Gaming Mechanical Keyboard",
+    "price": 89.99,
+    "description": "RGB backlit mechanical keyboard with blue switches for gaming enthusiasts.",
+    "ratings": "4.6",
+    "images": [
+      { "image": "https://example.com/images/keyboard1.jpg" }
+    ],
+    "category": "Electronics",
+    "seller": "GameTech",
+    "stock": 40,
+    "numOfReviews": 1,
+    "reviews": [
+      {
+        "name": "Kevin",
+        "rating": "5",
+        "comment": "Amazing keyboard for gaming!"
+      }
+    ]
+  },
+  {
+    "name": "LED Desk Lamp",
+    "price": 34.99,
+    "description": "Adjustable LED desk lamp with multiple brightness levels and USB charging port.",
+    "ratings": "4.3",
+    "images": [
+      { "image": "https://example.com/images/lamp1.jpg" }
+    ],
+    "category": "Home",
+    "seller": "LightHouse",
+    "stock": 65,
+    "numOfReviews": 0,
+    "reviews": []
+  },
+  {
+    "name": "Protein Powder - Vanilla",
+    "price": 29.99,
+    "description": "High-quality whey protein powder, 2lb container. Perfect for post-workout recovery.",
+    "ratings": "4.7",
+    "images": [
+      { "image": "https://example.com/images/protein1.jpg" }
+    ],
+    "category": "Sports",
+    "seller": "FitFuel",
+    "stock": 110,
+    "numOfReviews": 2,
+    "reviews": [
+      {
+        "name": "Liam",
+        "rating": "5",
+        "comment": "Great taste and mixes well!"
+      },
+      {
+        "name": "Mia",
+        "rating": "4.5",
+        "comment": "Good quality protein powder."
+      }
+    ]
   }
 ]

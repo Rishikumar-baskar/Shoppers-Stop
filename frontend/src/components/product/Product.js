@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 export default function Product({ product, col = 3, colSm = 12, colMd = 6, colLg = 3 }) {
     return (
-        <div className={`col-${colSm} col-md-${colMd} col-lg-${colLg} mb-4`}>
+        <div className={`col-sm-${colSm} col-md-${colMd} col-lg-${colLg} mb-4`}>
             <div className="card h-100">
                 <div className="card-img-container p-3">
                     <img

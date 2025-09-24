@@ -625,3 +625,159 @@ ul.CTAs a {
   font-size: 0.8rem;
   color: grey;
 }
+
+/* Admin Product List Search and Pagination */
+.admin-main-content .form-control:focus,
+.admin-main-content .form-select:focus {
+  border-color: #fa9c23;
+  box-shadow: 0 0 0 0.2rem rgba(250, 156, 35, 0.25);
+}
+
+.admin-main-content .btn-outline-primary {
+  color: #fa9c23;
+  border-color: #fa9c23;
+}
+
+.admin-main-content .btn-outline-primary:hover {
+  background-color: #fa9c23;
+  border-color: #fa9c23;
+}
+
+.admin-main-content .btn-primary {
+  background-color: #fa9c23;
+  border-color: #fa9c23;
+}
+
+.admin-main-content .btn-primary:hover {
+  background-color: #e8890b;
+  border-color: #e8890b;
+}
+
+/* Admin Table Styling */
+.admin-main-content .table th {
+  background-color: #232f3e;
+  color: white;
+  border-color: #232f3e;
+  font-weight: 600;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.admin-main-content .table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.admin-main-content .table-responsive {
+  border-radius: 0.375rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  border: 1px solid #dee2e6;
+}
+
+.admin-main-content .table {
+  margin-bottom: 0;
+}
+
+.admin-main-content .table .btn {
+  margin: 0 0.125rem;
+}
+
+/* Responsive adjustments for admin controls */
+@media (max-width: 768px) {
+  .admin-main-content .d-flex.justify-content-between.align-items-center.mb-3 {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .admin-main-content .d-flex.align-items-center {
+    justify-content: center;
+  }
+
+  .admin-main-content .form-control {
+    width: 100% !important;
+  }
+
+  .admin-main-content .table-responsive {
+    font-size: 0.875rem;
+  }
+
+  .admin-main-content .table .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-main-content .d-flex.justify-content-between.align-items-center.mt-3 {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .admin-main-content .d-flex {
+    justify-content: center;
+  }
+
+  .admin-main-content .table-responsive {
+    font-size: 0.75rem;
+  }
+
+  .admin-main-content .table .btn-sm {
+    padding: 0.125rem 0.25rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Product Detail Page Responsive Styles */
+#product_image {
+  text-align: center;
+}
+
+#product_image img,
+#product_image .carousel-item img {
+  max-height: 500px;
+  width: auto;
+  margin: 0 auto;
+}
+
+@media (max-width: 991.98px) {
+  #product_image img,
+  #product_image .carousel-item img {
+    max-height: 300px;
+  }
+
+  #product_price {
+    font-size: 1.8rem;
+  }
+
+  .stockCounter {
+    margin-top: 1rem;
+  }
+
+  .stockCounter input {
+    width: 60px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  #product_image img,
+  #product_image .carousel-item img {
+    max-height: 250px;
+  }
+
+  #product_price {
+    font-size: 1.6rem;
+  }
+
+  .stockCounter input {
+    width: 50px;
+    font-size: 1rem;
+  }
+
+  .plus, .minus {
+    padding: 0.2rem 0.6rem;
+    font-size: 1.2rem;
+  }
+}

@@ -8,9 +8,8 @@ import { toast } from 'react-toastify';
 import Loader from '../layouts/Loader'
 import MetaData from "../layouts/MetaData";
 import { addCartItem } from "../../actions/cartActions";
-import {Modal} from 'react-bootstrap';
+import {Modal, Carousel} from 'react-bootstrap';
 import ProductReview from './ProductReview';
-//import { Carousel } from 'react-bootstrap';
 
 export default function ProductDetail() {
     const { loading, product, isReviewSubmitted, error } = useSelector((state) => state.productState);
@@ -81,13 +80,35 @@ export default function ProductDetail() {
             <Fragment>
                 <MetaData title={product.name}/>
                 <div className="container container-fluid">
-                    <div className="row f-flex justify-content-around">
-                        <div className="col-12 col-lg-5 img-fluid" id="product_image">
-                           
-							<img src={product.images && product.images.length > 0 ? product.images[0].image : '/images/default_product.png'} alt={product.name} height="500" width="500" />
+                    <div className="row">
+                        <div className="col-12 col-lg-5 img-fluid mb-4 mb-lg-0" id="product_image">
+                            {product.images && product.images.length > 1 ? (
+                                <Carousel>
+                                    {product.images.map((image, index) => (
+                                        <Carousel.Item key={index}>
+                                            <img
+                                                className="d-block w-100"
+                                                src={image.image}
+                                                alt={`${product.name} - Image ${index + 1}`}
+                                                height="500"
+                                                style={{ objectFit: 'contain' }}
+                                            />
+                                        </Carousel.Item>
+                                    ))}
+                                </Carousel>
+                            ) : (
+                                <img
+                                    src={product.images && product.images.length > 0 ? product.images[0].image : '/images/default_product.png'}
+                                    alt={product.name}
+                                    height="500"
+                                    width="500"
+                                    className="d-block w-100"
+                                    style={{ objectFit: 'contain' }}
+                                />
+                            )}
 
-							<hr />
-							<ProductReview reviews={product.reviews} />
+       <hr />
+       <ProductReview reviews={product.reviews} />
                         </div>
 
                         <div className="col-12 col-lg-5 mt-5">
