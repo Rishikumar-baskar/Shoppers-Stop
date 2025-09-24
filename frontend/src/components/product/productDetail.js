@@ -84,7 +84,7 @@ export default function ProductDetail() {
                     <div className="row f-flex justify-content-around">
                         <div className="col-12 col-lg-5 img-fluid" id="product_image">
                            
-							<img src={product.images && product.images.length > 0 ? `http://127.0.0.1:8000/uploads/${product.images[0].image}` : '/images/default_avatar.png'} alt={product.name} height="500" width="500" />
+							<img src={product.images && product.images.length > 0 ? product.images[0].image : '/images/default_product.png'} alt={product.name} height="500" width="500" />
 
 							<hr />
 							<ProductReview reviews={product.reviews} />

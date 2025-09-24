@@ -38,7 +38,7 @@ exports.newProduct = catchAsyncError(async (req,res,next)=>{
    let images = []
    if(req.files && req.files.length > 0){
        req.files.forEach(file => {
-           let url = `${process.env.BACKEND_URL}/uploads/product/${file.originalname}`
+           let url = `/uploads/product/${file.originalname}`
            images.push({image: url})
        })
        req.body.images = images
@@ -82,7 +82,7 @@ exports.updateProduct = async(req, res, next) => {
   let images = []
   if(req.files && req.files.length > 0){
       req.files.forEach(file => {
-          let url = `${process.env.BACKEND_URL}/uploads/product/${file.originalname}`
+          let url = `/uploads/product/${file.originalname}`
           images.push({image: url})
       })
       req.body.images = images

@@ -39,7 +39,7 @@ export default function Dashboard () {
             <div className="col-12 col-md-2">
                     <Sidebar/>
             </div>
-            <div className="col-12 col-md-10">
+            <div className="col-12 col-md-10 admin-main-content">
                 <h1 className="my-4">Dashboard</h1>
                 <div className="row pr-4">
                     <div className="col-xl-12 col-sm-12 mb-3">

@@ -74,7 +74,8 @@ function App() {
 
                 <HelmetProvider>
                     <Header />
-                    <div className="container container-fluid">
+                    <main className="main-content">
+                        <div className="container-fluid px-3 px-md-4">
                     
                     <ToastContainer
                         theme="dark"
@@ -126,7 +127,8 @@ function App() {
 
 
                     </Routes>
-                    </div>
+
+                    {/* Admin Routes */}
                     <Routes>
                         <Route path='/admin/dashboard' element={<ProtectedRoute adminOnly={true}><Dashboard/></ProtectedRoute>} />
                         <Route path='/admin/products' element={<ProtectedRoute adminOnly={true}><ProductsList/></ProtectedRoute>} />
@@ -137,6 +139,8 @@ function App() {
                         <Route path='/admin/products/create' element={<ProtectedRoute adminOnly={true}><ProductCreate/></ProtectedRoute>} />
                         <Route path='/admin/product/:id/edit' element={<ProtectedRoute adminOnly={true}><ProductEdit/></ProtectedRoute>} />
                     </Routes>
+                        </div>
+                    </main>
                     <Footer />
                 </HelmetProvider>
             </Router>

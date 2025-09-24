@@ -37,7 +37,7 @@ export default function Home() {
                     <section id="products" className="container mt-5">
                         <div className="row">
                             {products && products.map(product => (
-                                <Product col={3} key={product._id} product={product} />
+                                <Product col={12} colSm={6} colMd={4} colLg={3} key={product._id} product={product} />
                             ))}
                         </div>
                     </section>

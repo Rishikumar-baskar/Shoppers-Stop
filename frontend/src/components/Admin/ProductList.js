@@ -98,7 +98,7 @@ export default function ProductList() {
         <div className="col-12 col-md-2">
                 <Sidebar/>
         </div>
-        <div className="col-12 col-md-10">
+        <div className="col-12 col-md-10 admin-main-content">
             <h1 className="my-4">Product List</h1>
             <Fragment>
                 {loading ? <Loader/> : 

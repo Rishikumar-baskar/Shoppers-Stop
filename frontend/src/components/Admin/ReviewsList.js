@@ -72,39 +72,45 @@ export default function ReviewsList() {
 		<div className="container-fluid">
 			<div className="row">
 				<div className="col-12 mb-3">
-					<h2>Product Reviews</h2>
-					<div className="position-relative">
-						<input
-							type="text"
-							className="form-control"
-							placeholder="Search product by name..."
-							value={productName}
-							onChange={(e) => {
-								setProductName(e.target.value);
-								searchProducts(e.target.value);
-							}}
-						/>
-						{products.length > 0 && (
-							<div className="position-absolute bg-white border rounded shadow-sm w-100 mt-1" style={{zIndex: 1000, maxHeight: '200px', overflowY: 'auto'}}>
-								{products.map(product => (
-									<div
-										key={product._id}
-										className="p-2 border-bottom cursor-pointer"
-										onClick={() => selectProduct(product)}
-										style={{cursor: 'pointer'}}
-									>
-										{product.name}
+					<h2 className="mb-3">Product Reviews</h2>
+					<div className="row">
+						<div className="col-12 col-md-8">
+							<div className="position-relative">
+								<input
+									type="text"
+									className="form-control"
+									placeholder="Search product by name..."
+									value={productName}
+									onChange={(e) => {
+										setProductName(e.target.value);
+										searchProducts(e.target.value);
+									}}
+								/>
+								{products.length > 0 && (
+									<div className="position-absolute bg-white border rounded shadow-sm w-100 mt-1" style={{zIndex: 1000, maxHeight: '200px', overflowY: 'auto'}}>
+										{products.map(product => (
+											<div
+												key={product._id}
+												className="p-2 border-bottom cursor-pointer"
+												onClick={() => selectProduct(product)}
+												style={{cursor: 'pointer'}}
+											>
+												{product.name}
+											</div>
+										))}
 									</div>
-								))}
+								)}
 							</div>
-						)}
-					</div>
-					{productId && (
-						<div className="mt-2">
-							<small className="text-muted">Selected: {productName}</small>
-							<button className="btn btn-sm btn-outline-secondary ml-2" onClick={() => { setProductId(''); setProductName(''); setReviews([]); }}>Clear</button>
 						</div>
-					)}
+						<div className="col-12 col-md-4 mt-2 mt-md-0">
+							{productId && (
+								<div className="d-flex align-items-center">
+									<small className="text-muted mr-2">Selected: {productName}</small>
+									<button className="btn btn-sm btn-outline-secondary" onClick={() => { setProductId(''); setProductName(''); setReviews([]); }}>Clear</button>
+								</div>
+							)}
+						</div>
+					</div>
 				</div>
 				<div className="col-12">
 					{loading && <p>Loading...</p>}

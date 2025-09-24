@@ -47,38 +47,61 @@ export default function ProductCreate(){
 			<h2 className="my-3">Create Product</h2>
 			{error && <div className="alert alert-danger" role="alert">{String(error)}</div>}
 			<form onSubmit={onSubmit}>
-				<div className="form-group">
-					<label>Name</label>
-					<input name="name" value={form.name} onChange={onChange} className="form-control" required />
-				</div>
-				<div className="form-group">
-					<label>Price</label>
-					<input type="number" name="price" value={form.price} onChange={onChange} className="form-control" min="0" step="0.01" required />
+				<div className="row">
+					<div className="col-12 col-md-6">
+						<div className="form-group">
+							<label>Name</label>
+							<input name="name" value={form.name} onChange={onChange} className="form-control" required />
+						</div>
+					</div>
+					<div className="col-12 col-md-6">
+						<div className="form-group">
+							<label>Price</label>
+							<input type="number" name="price" value={form.price} onChange={onChange} className="form-control" min="0" step="0.01" required />
+						</div>
+					</div>
 				</div>
 				<div className="form-group">
 					<label>Description</label>
-					<textarea name="description" value={form.description} onChange={onChange} className="form-control" required />
+					<textarea name="description" value={form.description} onChange={onChange} className="form-control" rows="3" required />
 				</div>
-				<div className="form-group">
-					<label>Category</label>
-					<select name="category" value={form.category} onChange={onChange} className="form-control" required>
-						<option value="">Select</option>
-						{categories.map(c => <option key={c} value={c}>{c}</option>)}
-					</select>
+				<div className="row">
+					<div className="col-12 col-md-6">
+						<div className="form-group">
+							<label>Category</label>
+							<select name="category" value={form.category} onChange={onChange} className="form-control" required>
+								<option value="">Select</option>
+								{categories.map(c => <option key={c} value={c}>{c}</option>)}
+							</select>
+						</div>
+					</div>
+					<div className="col-12 col-md-6">
+						<div className="form-group">
+							<label>Seller</label>
+							<input name="seller" value={form.seller} onChange={onChange} className="form-control" required />
+						</div>
+					</div>
 				</div>
-				<div className="form-group">
-					<label>Seller</label>
-					<input name="seller" value={form.seller} onChange={onChange} className="form-control" required />
+				<div className="row">
+					<div className="col-12 col-md-6">
+						<div className="form-group">
+							<label>Stock</label>
+							<input type="number" name="stock" value={form.stock} onChange={onChange} className="form-control" min="0" required />
+						</div>
+					</div>
+					<div className="col-12 col-md-6">
+						<div className="form-group">
+							<label>Images</label>
+							<input type="file" multiple onChange={onFiles} className="form-control-file" accept="image/*" />
+							<small className="form-text text-muted">Select multiple images for the product</small>
+						</div>
+					</div>
 				</div>
-				<div className="form-group">
-					<label>Stock</label>
-					<input type="number" name="stock" value={form.stock} onChange={onChange} className="form-control" min="0" required />
+				<div className="form-group text-center">
+					<button className="btn btn-primary btn-lg px-5" type="submit" disabled={loading}>
+						{loading ? 'Creating...' : 'Create Product'}
+					</button>
 				</div>
-				<div className="form-group">
-					<label>Images</label>
-					<input type="file" multiple onChange={onFiles} className="form-control-file" />
-				</div>
-				<button className="btn btn-primary" type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create'}</button>
 			</form>
 		</div>
 	)
