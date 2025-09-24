@@ -548,8 +548,14 @@ a[data-toggle='collapse'] {
   display: block;
   position: absolute;
   top: 50%;
-  right: 20px;
+  right: 15px;
   transform: translateY(-50%);
+  margin-left: 1rem !important;
+  margin-right: 0.5rem !important;
+}
+
+.dropdown-toggle {
+  padding-right: 3rem !important;
 }
 
 ul ul a {
