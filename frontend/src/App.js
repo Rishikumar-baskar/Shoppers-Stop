@@ -31,6 +31,12 @@ import OrderSuccess from './components/cart/OrderSuccess';
 import UserOrders from './components/order/UserOrders';
 import OrderDetail from './components/order/OrderDetail';
 import Dashboard from './components/Admin/Dashboard';
+import ProductsList from './components/Admin/ProductsList';
+import OrdersList from './components/Admin/OrdersList';
+import ReviewsList from './components/Admin/ReviewsList';
+import UsersList from './components/Admin/UsersList';
+import ProductCreate from './components/Admin/ProductCreate';
+import ProductEdit from './components/Admin/ProductEdit';
 
 function App() {
     const [stripeApiKey, setStripeApiKey] = useState("")
@@ -122,6 +128,12 @@ function App() {
                     </div>
                     <Routes>
                         <Route path='/admin/dashboard' element={<ProtectedRoute adminOnly={true}><Dashboard/></ProtectedRoute>} />
+                        <Route path='/admin/products' element={<ProtectedRoute adminOnly={true}><ProductsList/></ProtectedRoute>} />
+                        <Route path='/admin/orders' element={<ProtectedRoute adminOnly={true}><OrdersList/></ProtectedRoute>} />
+                        <Route path='/admin/reviews' element={<ProtectedRoute adminOnly={true}><ReviewsList/></ProtectedRoute>} />
+                        <Route path='/admin/users' element={<ProtectedRoute adminOnly={true}><UsersList/></ProtectedRoute>} />
+                        <Route path='/admin/products/create' element={<ProtectedRoute adminOnly={true}><ProductCreate/></ProtectedRoute>} />
+                        <Route path='/admin/product/:id/edit' element={<ProtectedRoute adminOnly={true}><ProductEdit/></ProtectedRoute>} />
                     </Routes>
                     <Footer />
                 </HelmetProvider>
