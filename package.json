@@ -7,7 +7,8 @@
     "start": "nodemon backend/server.js",
     "dev": "set NODE_ENV=development&& nodemon backend/server.js",
     "prod": "set NODE_ENV=production&& nodemon backend/server.js",
-    "seeder": "node backend/utils/seeder.js"
+    "seeder": "node backend/utils/seeder.js",
+    "seed-users": "node backend/utils/seeder.js users"
   },
   "author": "B Rishikumar",
   "license": "ISC",

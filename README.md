@@ -86,9 +86,13 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) e-commerce applicatio
 
 4. **Database Setup:**
 
-   Start MongoDB and run the seeder to populate initial data:
+   Start MongoDB and run the seeders to populate initial data:
    ```bash
+   # Seed products
    npm run seeder
+
+   # Seed users (admin and regular users)
+   npm run seed-users
    ```
 
 5. **Start the Application:**
