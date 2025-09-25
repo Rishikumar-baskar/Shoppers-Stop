@@ -13,7 +13,7 @@ export default function UserOrders() {
         dispatch(userOrdersAction());  // Call the action here!
     }, [dispatch]);
 
-    console.log("userOrders:", userOrders); // Debugging output
+    // Debug logs removed - orders should now display correctly
 
     const setOrders = () => {
         const data = {
