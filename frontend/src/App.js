@@ -55,13 +55,20 @@ function App() {
         }
         async function getStripeApiKey() {
             const token = localStorage.getItem('token');
+            if (!token) return; // Don't call API if no token
+
             const config = {
                 headers: {
-                    'Authorization': token ? `Bearer ${token}` : ''
+                    'Authorization': `Bearer ${token}`
                 }
             };
-            const { data } = await axios.get('/api/v1/stripeapi', config)
-            setStripeApiKey(data.stripeApiKey)
+            try {
+                const { data } = await axios.get('/api/v1/stripeapi', config)
+                setStripeApiKey(data.stripeApiKey)
+            } catch (error) {
+                console.error('Failed to get Stripe API key:', error);
+                // Don't set stripeApiKey if request fails
+            }
         }
         getStripeApiKey()
 
@@ -126,10 +133,7 @@ function App() {
 
 
 
-                    </Routes>
-
-                    {/* Admin Routes */}
-                    <Routes>
+                        {/* Admin Routes */}
                         <Route path='/admin/dashboard' element={<ProtectedRoute adminOnly={true}><Dashboard/></ProtectedRoute>} />
                         <Route path='/admin/products' element={<ProtectedRoute adminOnly={true}><ProductsList/></ProtectedRoute>} />
                         <Route path='/admin/orders' element={<ProtectedRoute adminOnly={true}><OrdersList/></ProtectedRoute>} />
