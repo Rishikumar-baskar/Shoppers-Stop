@@ -1,9 +1,23 @@
 const catchAsyncError = require('../middlewares/catchAsyncError');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+
+// Initialize Stripe only if the secret key is available
+let stripe;
+if (process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY !== 'sk_test_your_stripe_secret_key_here') {
+    stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+} else {
+    console.warn('Stripe secret key not configured. Payment functionality will be disabled.');
+}
 
 
 
 exports.processPayment = catchAsyncError(async(req, res , next) => {
+    if (!stripe) {
+        return res.status(500).json({
+            success: false,
+            message: 'Stripe is not configured. Please set up your Stripe API keys.'
+        });
+    }
+
     const paymentIntent = await stripe.paymentIntents.create({
         amount: req.body.amount,
         currency: "usd",
@@ -21,10 +35,10 @@ exports.processPayment = catchAsyncError(async(req, res , next) => {
 exports.sendStripeApi = catchAsyncError(async(req, res , next) => {
     console.log('STRIPE_API_KEY:', process.env.STRIPE_API_KEY);
 
-    if (!process.env.STRIPE_API_KEY) {
+    if (!process.env.STRIPE_API_KEY || process.env.STRIPE_API_KEY === 'pk_test_your_stripe_publishable_key_here') {
         return res.status(500).json({
             success: false,
-            message: 'Stripe API key not found'
+            message: 'Stripe API key not configured. Please set up your Stripe API keys.'
         });
     }
 
