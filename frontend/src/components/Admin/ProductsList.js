@@ -46,13 +46,13 @@ export default function ProductsList() {
 		<div style={{ 
 			backgroundColor: '#f8f9fa', 
 			minHeight: '100vh', 
-			padding: '2rem 0' 
+			padding: window.innerWidth < 768 ? '1rem 0' : '2rem 0' 
 		}}>
-			<div className="container-fluid">
+			<div className="container-fluid" style={{ padding: window.innerWidth < 768 ? '0.5rem' : '1rem' }}>
 				<div style={{
 					backgroundColor: 'white',
 					borderRadius: '12px',
-					padding: '2rem',
+					padding: window.innerWidth < 768 ? '1rem' : '2rem',
 					boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
 					marginBottom: '2rem'
 				}}>
@@ -61,10 +61,12 @@ export default function ProductsList() {
 						display: 'flex', 
 						justifyContent: 'space-between', 
 						alignItems: 'center',
-						marginBottom: '2rem'
+						marginBottom: window.innerWidth < 768 ? '1.5rem' : '2rem',
+						flexDirection: window.innerWidth < 576 ? 'column' : 'row',
+						gap: window.innerWidth < 576 ? '1rem' : '0'
 					}}>
 						<h2 style={{ 
-							fontSize: '1.8rem', 
+							fontSize: window.innerWidth < 576 ? '1.5rem' : '1.8rem', 
 							fontWeight: '600', 
 							color: '#2c3e50',
 							margin: 0
@@ -83,7 +85,9 @@ export default function ProductsList() {
 								borderRadius: '8px',
 								textDecoration: 'none',
 								fontWeight: '500',
-								transition: 'all 0.3s ease'
+								transition: 'all 0.3s ease',
+								width: window.innerWidth < 576 ? '100%' : 'auto',
+								justifyContent: 'center'
 							}}
 							onMouseOver={(e) => e.target.style.backgroundColor = '#e55a2b'}
 							onMouseOut={(e) => e.target.style.backgroundColor = '#ff6b35'}
@@ -99,7 +103,8 @@ export default function ProductsList() {
 						alignItems: 'center',
 						marginBottom: '1.5rem',
 						flexWrap: 'wrap',
-						gap: '1rem'
+						gap: '1rem',
+						flexDirection: window.innerWidth < 576 ? 'column' : 'row'
 					}}>
 						<div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
 							<label style={{ 
@@ -144,7 +149,7 @@ export default function ProductsList() {
 									borderRadius: '6px',
 									padding: '0.5rem 1rem',
 									fontSize: '0.9rem',
-									width: '200px',
+									width: window.innerWidth < 576 ? '100%' : '200px',
 									backgroundColor: 'white'
 								}}
 							/>
@@ -175,13 +180,15 @@ export default function ProductsList() {
 					{!loading && !error && (
 						<div style={{ 
 							borderRadius: '8px',
-							overflow: 'hidden',
-							border: '1px solid #e1e5e9'
+							overflow: 'auto',
+							border: '1px solid #e1e5e9',
+							maxWidth: '100%'
 						}}>
 							<table style={{ 
 								width: '100%', 
 								borderCollapse: 'collapse',
-								backgroundColor: 'white'
+								backgroundColor: 'white',
+								minWidth: window.innerWidth < 768 ? '600px' : 'auto'
 							}}>
 								<thead>
 									<tr style={{ backgroundColor: '#f8f9fa' }}>

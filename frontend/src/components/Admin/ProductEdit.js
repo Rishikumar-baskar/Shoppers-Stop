@@ -85,21 +85,25 @@ export default function ProductEdit(){
 	}
 
 	return (
-		<div className="container" style={{ minHeight: '100vh', backgroundColor: '#f8f9fa', padding: '2rem 0' }}>
+		<div className="container-fluid" style={{ 
+			minHeight: '100vh', 
+			backgroundColor: '#f8f9fa', 
+			padding: '1rem'
+		}}>
 			<div className="row justify-content-center">
-				<div className="col-12 col-md-8 col-lg-6">
+				<div className="col-12 col-sm-11 col-md-10 col-lg-8 col-xl-6">
 					<div style={{
 						backgroundColor: 'white',
 						borderRadius: '12px',
-						padding: '2rem',
+						padding: window.innerWidth < 576 ? '1rem' : '2rem',
 						boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
 						marginBottom: '2rem'
 					}}>
 						<h2 style={{ 
-							fontSize: '1.8rem', 
+							fontSize: window.innerWidth < 576 ? '1.5rem' : '1.8rem', 
 							fontWeight: '600', 
 							color: '#2c3e50', 
-							marginBottom: '2rem',
+							marginBottom: window.innerWidth < 576 ? '1.5rem' : '2rem',
 							textAlign: 'center'
 						}}>
 							Update Product
@@ -126,7 +130,7 @@ export default function ProductEdit(){
 						{form.name && (
 							<form onSubmit={onSubmit}>
 								<div className="row">
-									<div className="col-12 col-md-6">
+									<div className="col-12 col-lg-6">
 										<div className="form-group" style={{ marginBottom: '1.5rem' }}>
 											<label style={{ 
 												fontWeight: '500', 
@@ -151,7 +155,7 @@ export default function ProductEdit(){
 											/>
 										</div>
 									</div>
-									<div className="col-12 col-md-6">
+									<div className="col-12 col-lg-6">
 										<div className="form-group" style={{ marginBottom: '1.5rem' }}>
 											<label style={{ 
 												fontWeight: '500', 
@@ -208,7 +212,7 @@ export default function ProductEdit(){
 								</div>
 								
 								<div className="row">
-									<div className="col-12 col-md-6">
+									<div className="col-12 col-lg-6">
 										<div className="form-group" style={{ marginBottom: '1.5rem' }}>
 											<label style={{ 
 												fontWeight: '500', 
@@ -236,7 +240,7 @@ export default function ProductEdit(){
 											</select>
 										</div>
 									</div>
-									<div className="col-12 col-md-6">
+									<div className="col-12 col-lg-6">
 										<div className="form-group" style={{ marginBottom: '1.5rem' }}>
 											<label style={{ 
 												fontWeight: '500', 
@@ -264,7 +268,7 @@ export default function ProductEdit(){
 								</div>
 								
 								<div className="row">
-									<div className="col-12 col-md-6">
+									<div className="col-12 col-lg-6">
 										<div className="form-group" style={{ marginBottom: '1.5rem' }}>
 											<label style={{ 
 												fontWeight: '500', 
@@ -291,7 +295,7 @@ export default function ProductEdit(){
 											/>
 										</div>
 									</div>
-									<div className="col-12 col-md-6">
+									<div className="col-12 col-lg-6">
 										<div className="form-group" style={{ marginBottom: '1.5rem' }}>
 											<label style={{ 
 												fontWeight: '500', 
