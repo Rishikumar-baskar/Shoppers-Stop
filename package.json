@@ -8,7 +8,8 @@
     "dev": "set NODE_ENV=development&& nodemon backend/server.js",
     "prod": "set NODE_ENV=production&& nodemon backend/server.js",
     "seeder": "node backend/utils/seeder.js",
-    "seed-users": "node backend/utils/seeder.js users"
+    "seed-users": "node backend/utils/seeder.js users",
+    "preinstall": "node preinstall.js"
   },
   "author": "B Rishikumar",
   "license": "ISC",

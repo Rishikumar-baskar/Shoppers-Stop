@@ -231,39 +231,41 @@ export default function Header() {
                             </Link>
                         )}
 
-                        <Link 
-                            to="/cart" 
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '0.5rem',
-                                color: 'white',
-                                textDecoration: 'none',
-                                padding: '0.5rem 1rem',
-                                borderRadius: '8px',
-                                transition: 'all 0.3s ease',
-                                backgroundColor: 'rgba(255, 255, 255, 0.1)'
-                            }}
-                            onMouseOver={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.2)'}
-                            onMouseOut={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
-                        >
-                            <i className="fa fa-shopping-cart"></i>
-                            <span style={{ fontSize: '0.9rem' }}>Cart</span>
-                            <span style={{
-                                backgroundColor: '#ff6b35',
-                                color: 'white',
-                                borderRadius: '50%',
-                                width: '20px',
-                                height: '20px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: '0.8rem',
-                                fontWeight: '600'
-                            }}>
-                                {cartItems.length}
-                            </span>
-                        </Link>
+                        {isAuthenticated && (
+                            <Link
+                                to="/cart"
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.5rem',
+                                    color: 'white',
+                                    textDecoration: 'none',
+                                    padding: '0.5rem 1rem',
+                                    borderRadius: '8px',
+                                    transition: 'all 0.3s ease',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                                }}
+                                onMouseOver={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.2)'}
+                                onMouseOut={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
+                            >
+                                <i className="fa fa-shopping-cart"></i>
+                                <span style={{ fontSize: '0.9rem' }}>Cart</span>
+                                <span style={{
+                                    backgroundColor: '#ff6b35',
+                                    color: 'white',
+                                    borderRadius: '50%',
+                                    width: '20px',
+                                    height: '20px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    fontSize: '0.8rem',
+                                    fontWeight: '600'
+                                }}>
+                                    {cartItems.length}
+                                </span>
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>
